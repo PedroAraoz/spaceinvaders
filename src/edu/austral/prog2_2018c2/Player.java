@@ -34,7 +34,7 @@ public class Player extends Sprite implements Commons {
     public void act() {
 
         x += dx;
-
+        // control de bordes del board
         if (x <= 2) {
             x = 2;
         }
@@ -47,7 +47,7 @@ public class Player extends Sprite implements Commons {
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
-
+        // se fija si estas apretnado izq o derecha
         if (key == KeyEvent.VK_LEFT) {
 
             dx = -2;
@@ -62,7 +62,7 @@ public class Player extends Sprite implements Commons {
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
-
+        //cuando soltas la flecha tu v = 0
         if (key == KeyEvent.VK_LEFT) {
 
             dx = 0;

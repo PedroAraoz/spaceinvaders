@@ -138,7 +138,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
-        g.setColor(Color.green);
+        g.setColor(Color.white); // linea en donde el player esta parado.
 
         if (ingame) {
 
@@ -159,13 +159,13 @@ public class Board extends JPanel implements Runnable, Commons {
 
         g.setColor(Color.black);
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
-
+        //cuadrado del game over
         g.setColor(new Color(0, 32, 48));
         g.fillRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
         g.setColor(Color.white);
         g.drawRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
 
-        Font small = new Font("Helvetica", Font.BOLD, 14);
+        Font small = new Font("Comic Sans", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
 
         g.setColor(Color.white);
@@ -195,7 +195,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 int alienX = alien.getX();
                 int alienY = alien.getY();
-
+                // shot.isvisible dos veces?
                 if (alien.isVisible() && shot.isVisible()) {
                     if (shotX >= (alienX)
                             && shotX <= (alienX + ALIEN_WIDTH)
@@ -203,6 +203,7 @@ public class Board extends JPanel implements Runnable, Commons {
                             && shotY <= (alienY + ALIEN_HEIGHT)) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
+                        // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
                         deaths++;
