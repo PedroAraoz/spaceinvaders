@@ -1,11 +1,13 @@
 package edu.austral.prog2_2018c2;
 
-
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
 public class Player extends Sprite implements Commons {
+
+    private int points = 0;
+    private int consecutiveHits = 0;
 
     private final int START_Y = 280;
     private final int START_X = 270;
@@ -70,5 +72,21 @@ public class Player extends Sprite implements Commons {
 
             dx = 0;
         }
+    }
+
+    public int getPoints(){
+        return points;
+    }
+
+    public void addPoints(int p){
+        this.points = points + p;
+    }
+
+    public int getConsecutiveHits(){
+        return consecutiveHits;
+    }
+
+    public void ConsecutiveHitPlus1(){
+        this.consecutiveHits++;
     }
 }
