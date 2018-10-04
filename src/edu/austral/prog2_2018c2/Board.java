@@ -60,11 +60,11 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameInit() {
 
         aliens = new ArrayList<>();
-
+        // creating the aliens
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
-
-                Alien alien = new Alien(ALIEN_INIT_X + 18 * j, ALIEN_INIT_Y + 18 * i);
+                String[] rand = {"small", "medium", "big"};
+                Alien alien = new Alien(ALIEN_INIT_X + 18 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
                 aliens.add(alien);
             }
         }
@@ -198,9 +198,9 @@ public class Board extends JPanel implements Runnable, Commons {
                 // shot.isvisible dos veces?
                 if (alien.isVisible() && shot.isVisible()) {
                     if (shotX >= (alienX)
-                            && shotX <= (alienX + ALIEN_WIDTH)
+                            && shotX <= (alienX + alien.getWidth())
                             && shotY >= (alienY)
-                            && shotY <= (alienY + ALIEN_HEIGHT)) {
+                            && shotY <= (alienY + alien.getHeight())) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
@@ -264,7 +264,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 int y = alien.getY();
 
-                if (y > GROUND - ALIEN_HEIGHT) {
+                if (y > GROUND - alien.getHeight()) {
                     ingame = false;
                     message = "Invasion!";
                 }
