@@ -206,8 +206,13 @@ public class Board extends JPanel implements Runnable, Commons {
                         // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
+                        //agrego el sistema de poderes especiales
+                        player.consecutiveHitPlus1();
                         deaths++;
                         shot.die();
+                        if(player.getConsecutiveHits() >= 4){
+                            player.giveSpecialPower();
+                        }
                     }
                 }
             }
@@ -216,6 +221,7 @@ public class Board extends JPanel implements Runnable, Commons {
             y -= 4;
 
             if (y < 0) {
+                player.resetConsecutiveHits();
                 shot.die();
             } else {
                 shot.setY(y);

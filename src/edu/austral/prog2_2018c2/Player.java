@@ -86,7 +86,31 @@ public class Player extends Sprite implements Commons {
         return consecutiveHits;
     }
 
-    public void ConsecutiveHitPlus1(){
+    public void consecutiveHitPlus1(){
         this.consecutiveHits++;
     }
+
+    public void resetConsecutiveHits(){
+        this.consecutiveHits = 0;
+    }
+
+    public void giveSpecialPower() {
+        double randomNumber = Math.random()*101; //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
+
+        if(randomNumber < 10){
+            freezePower();
+        }
+        else if(randomNumber < 30){
+            immunityPower();
+        }
+        else{
+            doubleDamagePower();
+        }
+    }
+
+    private void freezePower(){}
+
+    private void immunityPower(){}
+
+    private void doubleDamagePower(){}
 }
