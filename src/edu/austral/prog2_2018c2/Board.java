@@ -142,9 +142,7 @@ public class Board extends JPanel implements Runnable, Commons {
         g.setColor(Color.white); // linea en donde el player esta parado.
 
         if (ingame) {
-            g.drawString("Lifes:"+playerLife, 1,
-                    15);
-            g.drawString("Lifes:"+playerLife, 1,
+            g.drawString("Lives:" + playerLife, 1,
                     15);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
             drawAliens(g);
@@ -200,7 +198,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
                 // shot.isvisible dos veces?
-                if (alien.isVisible() && shot.isVisible()) {
+                if (alien.isVisible() && shot.isVisible()) {        //logica si shot le pega al alien
                     if (shotX >= (alienX)
                             && shotX <= (alienX + ALIEN_WIDTH)
                             && shotY >= (alienY)
@@ -297,7 +295,7 @@ public class Board extends JPanel implements Runnable, Commons {
             int playerX = player.getX();
             int playerY = player.getY();
 
-            if (player.isVisible() && !b.isDestroyed()) {
+            if (player.isVisible() && !b.isDestroyed()) {       //logica si bomb le pega al player
                 if (bombX >= (playerX)
                         && bombX <= (playerX + PLAYER_WIDTH)
                         && bombY >= (playerY)
