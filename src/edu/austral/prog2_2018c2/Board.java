@@ -33,6 +33,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
+    int playerLife = 3;
 
     public Board() {
 
@@ -141,7 +142,10 @@ public class Board extends JPanel implements Runnable, Commons {
         g.setColor(Color.white); // linea en donde el player esta parado.
 
         if (ingame) {
-
+            g.drawString("Lifes:"+playerLife, 1,
+                    15);
+            g.drawString("Lifes:"+playerLife, 1,
+                    15);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
             drawAliens(g);
             drawPlayer(g);
@@ -294,16 +298,21 @@ public class Board extends JPanel implements Runnable, Commons {
             int playerY = player.getY();
 
             if (player.isVisible() && !b.isDestroyed()) {
-
                 if (bombX >= (playerX)
                         && bombX <= (playerX + PLAYER_WIDTH)
                         && bombY >= (playerY)
                         && bombY <= (playerY + PLAYER_HEIGHT)) {
-                    ImageIcon ii
-                            = new ImageIcon(explImg);
-                    player.setImage(ii.getImage());
-                    player.setDying(true);
-                    b.setDestroyed(true);
+                    if(playerLife==0) {
+                        ImageIcon ii
+                                = new ImageIcon(explImg);
+                        player.setImage(ii.getImage());
+                        player.setDying(true);
+                        b.setDestroyed(true);
+                    }
+                    else{
+                        playerLife--;
+                        b.setDestroyed(true);
+                    }
                 }
             }
 
@@ -345,7 +354,6 @@ public class Board extends JPanel implements Runnable, Commons {
 
             beforeTime = System.currentTimeMillis();
         }
-
         gameOver();
     }
 
