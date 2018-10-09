@@ -4,18 +4,25 @@ import javax.swing.ImageIcon;
 
 public class Alien extends Sprite {
     private Bomb bomb;
-    private final String alienImg = "src/images/alien.png";
-
-    public Alien(int x, int y) {
-
-        initAlien(x, y);
+    //private final String alienImg = "src/images/alien.png";
+    private String alienImg;
+    private int points;
+    private int height;
+    private int width;
+    public Alien(int x, int y, String type) {
+        initAlien(x, y, type);
     }
 
-    private void initAlien(int x, int y) {
+    private void initAlien(int x, int y, String type) {
 
         this.x = x;
         this.y = y;
-
+        
+        switch (type){
+          case "big": points = 10;height = 12;width = 12;alienImg = "src/images/alien.png";break;
+          case "medium": points = 20;height = 11;width = 11;alienImg = "src/images/alien2.png";break;
+          case "small": points = 30;height = 10;width = 10;alienImg = "src/images/alien3.png";break;
+        }
         bomb = new Bomb(x, y);
         ImageIcon ii = new ImageIcon(alienImg);
         setImage(ii.getImage());
@@ -30,35 +37,15 @@ public class Alien extends Sprite {
 
         return bomb;
     }
-
-    public class Bomb extends Sprite {
-
-        private final String bombImg = "src/images/bomb.png";
-        private boolean destroyed;
-
-        public Bomb(int x, int y) {
-
-            initBomb(x, y);
-        }
-
-        private void initBomb(int x, int y) {
-
-            setDestroyed(true);
-            this.x = x;
-            this.y = y;
-            ImageIcon ii = new ImageIcon(bombImg);
-            setImage(ii.getImage());
-
-        }
-
-        public void setDestroyed(boolean destroyed) {
-
-            this.destroyed = destroyed;
-        }
-
-        public boolean isDestroyed() {
-
-            return destroyed;
-        }
+    public int getPoints(){
+      return points;
+    }
+  
+    public int getHeight() {
+      return height;
+    }
+  
+    public int getWidth() {
+      return width;
     }
 }

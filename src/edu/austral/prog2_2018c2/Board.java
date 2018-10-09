@@ -33,6 +33,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
+    int playerLife = 3;
 
     public Board() {
 
@@ -60,11 +61,11 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameInit() {
 
         aliens = new ArrayList<>();
-
+        // creating the aliens
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
-
-                Alien alien = new Alien(ALIEN_INIT_X + 18 * j, ALIEN_INIT_Y + 18 * i);
+                String[] rand = {"small", "medium", "big"};
+                Alien alien = new Alien(ALIEN_INIT_X + 18 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
                 aliens.add(alien);
             }
         }
@@ -123,7 +124,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         for (Alien a : aliens) {
 
-            Alien.Bomb b = a.getBomb();
+            Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
 
@@ -141,7 +142,8 @@ public class Board extends JPanel implements Runnable, Commons {
         g.setColor(Color.white); // linea en donde el player esta parado.
 
         if (ingame) {
-
+            g.drawString("Lives:" + playerLife, 1,
+                    15);
             g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
             drawAliens(g);
             drawPlayer(g);
@@ -196,11 +198,11 @@ public class Board extends JPanel implements Runnable, Commons {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
                 // shot.isvisible dos veces?
-                if (alien.isVisible() && shot.isVisible()) {
+                if (alien.isVisible() && shot.isVisible()) {        //logica si shot le pega al alien
                     if (shotX >= (alienX)
-                            && shotX <= (alienX + ALIEN_WIDTH)
+                            && shotX <= (alienX + alien.getWidth())
                             && shotY >= (alienY)
-                            && shotY <= (alienY + ALIEN_HEIGHT)) {
+                            && shotY <= (alienY + alien.getHeight())) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
@@ -270,7 +272,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 int y = alien.getY();
 
-                if (y > GROUND - ALIEN_HEIGHT) {
+                if (y > GROUND - alien.getHeight()) {
                     ingame = false;
                     message = "Invasion!";
                 }
@@ -285,7 +287,7 @@ public class Board extends JPanel implements Runnable, Commons {
         for (Alien alien: aliens) {
 
             int shot = generator.nextInt(15);
-            Alien.Bomb b = alien.getBomb();
+            Bomb b = alien.getBomb();
 
             if (shot == CHANCE && alien.isVisible() && b.isDestroyed()) {
 
@@ -299,17 +301,22 @@ public class Board extends JPanel implements Runnable, Commons {
             int playerX = player.getX();
             int playerY = player.getY();
 
-            if (player.isVisible() && !b.isDestroyed()) {
-
+            if (player.isVisible() && !b.isDestroyed()) {       //logica si bomb le pega al player
                 if (bombX >= (playerX)
                         && bombX <= (playerX + PLAYER_WIDTH)
                         && bombY >= (playerY)
                         && bombY <= (playerY + PLAYER_HEIGHT)) {
-                    ImageIcon ii
-                            = new ImageIcon(explImg);
-                    player.setImage(ii.getImage());
-                    player.setDying(true);
-                    b.setDestroyed(true);
+                    if(playerLife==0) {
+                        ImageIcon ii
+                                = new ImageIcon(explImg);
+                        player.setImage(ii.getImage());
+                        player.setDying(true);
+                        b.setDestroyed(true);
+                    }
+                    else{
+                        playerLife--;
+                        b.setDestroyed(true);
+                    }
                 }
             }
 
@@ -351,7 +358,6 @@ public class Board extends JPanel implements Runnable, Commons {
 
             beforeTime = System.currentTimeMillis();
         }
-
         gameOver();
     }
 
