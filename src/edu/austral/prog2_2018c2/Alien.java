@@ -10,7 +10,6 @@ public class Alien extends Sprite {
     private int height;
     private int width;
     public Alien(int x, int y, String type) {
-        // dejar el switch o lo cambio a subclases???
         initAlien(x, y, type);
     }
 
@@ -18,6 +17,7 @@ public class Alien extends Sprite {
 
         this.x = x;
         this.y = y;
+        
         switch (type){
           case "big": points = 10;height = 12;width = 12;alienImg = "src/images/alien.png";break;
           case "medium": points = 20;height = 11;width = 11;alienImg = "src/images/alien2.png";break;

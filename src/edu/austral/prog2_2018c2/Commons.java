@@ -5,13 +5,6 @@ public interface Commons {
     public static final int BOARD_HEIGHT = 350;
     public static final int GROUND = 290;
     public static final int BOMB_HEIGHT = 5;
-    /*public static final int ALIEN_HEIGHT = 12;
-    public static final int ALIEN_WIDTH = 12;
-    
-    estoy sacando alien height y alien width y lo meto adentro de alien ya que
-    cada tipo de alien tiene distinto tamaño
-    */
-    
     public static final int BORDER_RIGHT = 30;
     public static final int BORDER_LEFT = 5;
     public static final int GO_DOWN = 15;
