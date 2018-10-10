@@ -22,10 +22,12 @@ public class Board extends JPanel implements Runnable, Commons {
     private ArrayList<Alien> aliens;
     private Player player;
     private Shot shot;
-
+    private UFO ufo;
+    
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
+    private int direction2 = 1; // ~~~ para el UFO
     private int deaths = 0;
 
     private boolean ingame = true;
@@ -72,7 +74,8 @@ public class Board extends JPanel implements Runnable, Commons {
 
         player = new Player();
         shot = new Shot();
-
+        ufo = new UFO(100,10); // placeholder numbers
+        
         if (animator == null || !ingame) {
 
             animator = new Thread(this);
@@ -132,6 +135,13 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
     }
+    
+    public void drawUFO(Graphics g) {
+        if (ufo.isVisible()) {
+            
+            g.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
+        }
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -149,6 +159,7 @@ public class Board extends JPanel implements Runnable, Commons {
             drawPlayer(g);
             drawShot(g);
             drawBombing(g);
+            drawUFO(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -329,6 +340,13 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
             }
         }
+        // UFO
+        if (ufo.getX() >= BOARD_WIDTH - ufo.getWidth() && direction2 == 1) {
+            direction2 = -1;
+        } else if (ufo.getX() <= ufo.getWidth() && direction2 == -1) {
+            direction2 = 1;
+        }
+        ufo.act(direction2);
     }
 
     @Override

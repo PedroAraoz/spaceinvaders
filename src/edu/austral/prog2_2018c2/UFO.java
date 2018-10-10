@@ -21,10 +21,14 @@ public class UFO extends Sprite{
     this.y = y;
     height = 10;
     width = 10; // (aca o en commons?????)
-    UFOImg = "src/images/UFO.png";
+    UFOImg = "src/images/alien3.png";
     ImageIcon ii = new ImageIcon(UFOImg);
     setImage(ii.getImage());
     
+  }
+  public void act(int direction) {
+    
+    this.x += direction;
   }
   public int getPoints() {
     return points;
