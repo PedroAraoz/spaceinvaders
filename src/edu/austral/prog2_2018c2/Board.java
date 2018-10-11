@@ -34,7 +34,9 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
-    int playerLife = 99;
+    int playerLife = 3;
+
+    Grapher grapher = new Grapher();
 
     public Board() {
 
@@ -92,7 +94,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (alien.isVisible()) {
 
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+                grapher.drawImage(g, alien.getImage(), alien.getX(), alien.getY());
             }
             
         }
@@ -102,7 +104,7 @@ public class Board extends JPanel implements Runnable, Commons {
   
         if (player.isVisible()) {
 
-            g.drawImage(player.getImage(), player.getX(), player.getY(), this);
+            grapher.drawImage(g, player.getImage(), player.getX(), player.getY());
         }
     }
 
@@ -110,7 +112,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         if (shot.isVisible()) {
 
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+            grapher.drawImage(g, shot.getImage(), shot.getX(), shot.getY());
         }
     }
 
@@ -122,7 +124,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (!b.isDestroyed()) {
 
-                g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+                grapher.drawImage(g, b.getImage(), b.getX(), b.getY());
             }
         }
     }
@@ -130,22 +132,18 @@ public class Board extends JPanel implements Runnable, Commons {
     public void drawUFO(Graphics g) {
         if (ufo.isVisible()) {
             
-            g.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
+            grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
-        g.setColor(Color.white); // linea en donde el player esta parado.
+        grapher.drawBackground(g, d);
 
         if (ingame) {
-            g.drawString("Lives:" + playerLife, 1,
-                    15);
-            g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
+            grapher.drawLives(g, playerLife);
+            grapher.drawFloor(g);
             drawAliens(g);
             drawPlayer(g);
             drawShot(g);
@@ -155,27 +153,6 @@ public class Board extends JPanel implements Runnable, Commons {
 
         Toolkit.getDefaultToolkit().sync();
         g.dispose();
-    }
-
-    public void gameOver() {
-
-        Graphics g = this.getGraphics();
-
-        g.setColor(Color.black);
-        g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
-        //cuadrado del game over
-        g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
-        g.setColor(Color.white);
-        g.drawRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
-
-        Font small = new Font("Comic Sans", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(message, (BOARD_WIDTH - metr.stringWidth(message)) / 2,
-                BOARD_WIDTH / 2);
     }
 
     public void animationCycle() {
@@ -369,7 +346,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             beforeTime = System.currentTimeMillis();
         }
-        gameOver();
+        grapher.endGame(this.getGraphics(), message);
     }
 
     private class TAdapter extends KeyAdapter {
