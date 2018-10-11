@@ -79,7 +79,7 @@ public class Board extends JPanel implements Runnable, Commons {
         ufo = new UFO(directionUFO);
         
         
-        if (animator == null || !ingame) {
+        if (animator == null || !ingame) {//este if podriamos sacarlo, no?
 
             animator = new Thread(this);
             animator.start();
@@ -155,7 +155,6 @@ public class Board extends JPanel implements Runnable, Commons {
     public void animationCycle() {
 
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
-
             ingame = false;
             message = "Game won!";
         }
@@ -179,8 +178,7 @@ public class Board extends JPanel implements Runnable, Commons {
                             && shotX <= (alienX + alien.getWidth())
                             && shotY >= (alienY)
                             && shotY <= (alienY + alien.getHeight())) {
-                        ImageIcon ii
-                                = new ImageIcon(explImg);
+                        ImageIcon ii = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
                         player.addPoints(alien.getPoints());
@@ -189,9 +187,6 @@ public class Board extends JPanel implements Runnable, Commons {
                         player.consecutiveHitPlus1();
                         deaths++;
                         shot.die();
-                        if(player.getConsecutiveHits() >= 4){
-                            player.giveSpecialPower();
-                        }
                     }
                 }
             }
