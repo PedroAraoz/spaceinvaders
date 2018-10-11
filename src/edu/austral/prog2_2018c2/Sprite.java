@@ -8,7 +8,6 @@ public class Sprite {
     private Image image;
     protected int x;
     protected int y;
-    protected boolean dying;
     protected int dx;
 
     public Sprite() {
@@ -59,15 +58,5 @@ public class Sprite {
     public int getX() {
 
         return x;
-    }
-
-    public void setDying(boolean dying) {
-
-        this.dying = dying;
-    }
-
-    public boolean isDying() {
-
-        return this.dying;
     }
 }

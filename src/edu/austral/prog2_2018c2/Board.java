@@ -23,7 +23,6 @@ public class Board extends JPanel implements Runnable, Commons {
     private Player player;
     private Shot shot;
     private UFO ufo;
-    // ~~~ hacer que el ufo se mueva con direction con los aliens y qeu spawnee depende de ese valor de dir
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
@@ -35,7 +34,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
-    int playerLife = 3;
+    int playerLife = 99;
 
     public Board() {
 
@@ -95,25 +94,15 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
             }
-
-            if (alien.isDying()) {
-
-                alien.die();
-            }
+            
         }
     }
 
     public void drawPlayer(Graphics g) {
-
+  
         if (player.isVisible()) {
 
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
-        }
-
-        if (player.isDying()) {
-
-            player.die();
-            ingame = false;
         }
     }
 
@@ -220,7 +209,7 @@ public class Board extends JPanel implements Runnable, Commons {
                                 = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
-                        alien.setDying(true);
+                        alien.die();
                         //agrego el sistema de poderes especiales
                         player.consecutiveHitPlus1();
                         deaths++;
@@ -323,7 +312,8 @@ public class Board extends JPanel implements Runnable, Commons {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
                         player.setImage(ii.getImage());
-                        player.setDying(true);
+                        player.die();
+                        ingame = false;
                         b.setDestroyed(true);
                     }
                     else{
