@@ -6,10 +6,12 @@ public class Keyboard extends KeyAdapter {
 
     Player player;
     Shot shot;
+    Board board;
 
-    public Keyboard(Player player, Shot shot){
+    public Keyboard(Board board, Player player, Shot shot){
         this.player = player;
         this.shot = shot;
+        this.board = board;
     }
 
     @Override
@@ -30,11 +32,12 @@ public class Keyboard extends KeyAdapter {
 
         if (key == KeyEvent.VK_SPACE) {
 
-            //removed if(ingame) before this line
-
+            //removed if(ingame) before this line.
             if (!shot.isVisible()) {
-                shot = new Shot(x, y); //esto reempza el shot de keyboard, no de board. Cuando implementemos el grapher hay q cambiar eso
+                board.setShot(new Shot(x, y));
             }
         }
+
+        this.shot = board.getShot();
     }
 }

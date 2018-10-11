@@ -34,7 +34,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
-    int playerLife = 3;
+    int playerLife = 99;
 
     Grapher grapher = new Grapher();
 
@@ -75,7 +75,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         player = new Player();
         shot = new Shot();
-        addKeyListener(new Keyboard(player, shot));
+        addKeyListener(new Keyboard(this, player, shot));
         directionUFO = direction;
         ufo = new UFO(directionUFO);
         
@@ -348,5 +348,13 @@ public class Board extends JPanel implements Runnable, Commons {
             beforeTime = System.currentTimeMillis();
         }
         grapher.endGame(this.getGraphics(), message);
+    }
+
+    public void setShot(Shot shot){
+        this.shot = shot;
+    }
+
+    public Shot getShot(){
+        return shot;
     }
 }
