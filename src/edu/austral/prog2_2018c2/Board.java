@@ -44,7 +44,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     private void initBoard() {
 
-        addKeyListener(new TAdapter());
+
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
@@ -74,6 +74,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         player = new Player();
         shot = new Shot();
+        addKeyListener(new Keyboard(player, shot));
         directionUFO = direction;
         ufo = new UFO(directionUFO);
         
@@ -380,34 +381,5 @@ public class Board extends JPanel implements Runnable, Commons {
             beforeTime = System.currentTimeMillis();
         }
         gameOver();
-    }
-
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-            player.keyReleased(e);
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-            player.keyPressed(e);
-
-            int x = player.getX();
-            int y = player.getY();
-
-            int key = e.getKeyCode();
-
-            if (key == KeyEvent.VK_SPACE) {
-
-                if (ingame) {
-                    if (!shot.isVisible()) {
-                        shot = new Shot(x, y);
-                    }
-                }
-            }
-        }
     }
 }
