@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 public class Keyboard extends KeyAdapter {
 
+    //Estos son los objetos a los que necesita mandarles los mensajes cuando se presionan las teclas
     private Player player;
     private Shot shot;
     private Board board;

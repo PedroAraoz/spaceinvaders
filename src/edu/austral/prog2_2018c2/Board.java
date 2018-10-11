@@ -22,11 +22,11 @@ public class Board extends JPanel implements Runnable, Commons {
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
-    private int directionUFO;
+    private int directionUFO; //ver comentario en gameInit directionUFO
     private int deaths = 0;
 
     private boolean ingame = true;
-    private final String explImg = "src/images/explosion.png";
+    private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message = "Game Over";
 
     private Thread animator;
@@ -70,11 +70,11 @@ public class Board extends JPanel implements Runnable, Commons {
         player = new Player();
         shot = new Shot();
         addKeyListener(new Keyboard(this, player, shot));
-        directionUFO = direction;
+        directionUFO = direction; //DirectionUFO no se puede eliminar si siempre va a ser igual a direction? ufo = new UFO(direction);
         ufo = new UFO(directionUFO);
 
 
-        if (animator == null || !ingame) {//este if podriamos sacarlo, no?
+        if (animator == null || !ingame) { //este "if" podriamos sacarlo, no?
 
             animator = new Thread(this);
             animator.start();
@@ -83,7 +83,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void drawAliens(Graphics g) {
 
-        Iterator it = aliens.iterator();
+        Iterator iterator = aliens.iterator(); //Esto para que lo hace??
 
         for (Alien alien: aliens) {
 
@@ -155,7 +155,8 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void animationCycle() {
 
-        if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
+        if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
+                                                    // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
             ingame = false;
             message = "Game won!";
         }
@@ -173,13 +174,17 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 int alienX = alien.getX();
                 int alienY = alien.getY();
+
                 if (alien.isVisible()                       //logica si shot le pega al alien
                         && (shotX >= (alienX)
                         && shotX <= (alienX + alien.getWidth())
                         && shotY >= (alienY)
                         && shotY <= (alienY + alien.getHeight()))) {
+
+                    //Todo lo que viene ahora deberia estar delegado
+
                     ImageIcon ii = new ImageIcon(explImg);
-                    // no grafica nunca a la imagen de explosion
+                    //no grafica nunca a la imagen de explosion
                     alien.setImage(ii.getImage());
                     player.addPoints(alien.getPoints());
                     alien.die();
