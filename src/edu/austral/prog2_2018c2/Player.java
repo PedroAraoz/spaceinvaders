@@ -164,4 +164,7 @@ public class Player extends Sprite implements Commons {
     public int getLife() {
         return life;
     }
+    public List<Shield> getShields(){
+        return shields;
+    }
 }

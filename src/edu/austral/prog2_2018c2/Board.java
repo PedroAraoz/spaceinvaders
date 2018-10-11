@@ -131,7 +131,10 @@ public class Board extends JPanel implements Runnable, Commons {
             grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
-
+    public void drawShield(Graphics g) {
+        ImageIcon pp = new ImageIcon("src/images/shield.gif");
+        grapher.drawImage(g, pp.getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
+    }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -147,6 +150,7 @@ public class Board extends JPanel implements Runnable, Commons {
             drawShot(g);
             drawBombing(g);
             drawUFO(g);
+            drawShield(g);
         }
 
         Toolkit.getDefaultToolkit().sync();

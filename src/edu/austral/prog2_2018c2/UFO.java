@@ -11,11 +11,11 @@ public class UFO extends Sprite{
   private int width;
   
   
-  public UFO(/*int x, int y*/int direction){
+  public UFO(int direction){
     initUFO(direction);
   }
   
-  private void initUFO(/*int x, int y*/int direction) {
+  private void initUFO(int direction) {
     points = 50 + (int)(Math.random()*((300-50) + 1));
     if (direction == 1) {
       this.x = 0;
