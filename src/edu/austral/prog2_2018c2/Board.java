@@ -51,7 +51,6 @@ public class Board extends JPanel implements Runnable, Commons {
     //~~~ no hace nada????
     /*@Override
     public void addNotify() {
-
         super.addNotify();
         gameInit();
     }*/
@@ -73,8 +72,8 @@ public class Board extends JPanel implements Runnable, Commons {
         addKeyListener(new Keyboard(this, player, shot));
         directionUFO = direction;
         ufo = new UFO(directionUFO);
-        
-        
+
+
         if (animator == null || !ingame) {//este if podriamos sacarlo, no?
 
             animator = new Thread(this);
@@ -92,7 +91,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 grapher.drawImage(g, alien.getImage(), alien.getX(), alien.getY());
             }
-            
+
         }
     }
 
@@ -120,10 +119,10 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
     }
-    
+
     public void drawUFO(Graphics g) {
         if (ufo.isVisible()) {
-            
+
             grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
@@ -174,21 +173,20 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 int alienX = alien.getX();
                 int alienY = alien.getY();
-                // shot.isvisible dos veces?
                 if (alien.isVisible()                       //logica si shot le pega al alien
-                            && (shotX >= (alienX)
-                            && shotX <= (alienX + alien.getWidth())
-                            && shotY >= (alienY)
-                            && shotY <= (alienY + alien.getHeight()))) {
-                        ImageIcon ii = new ImageIcon(explImg);
-                        // no grafica nunca a la imagen de explosion
-                        alien.setImage(ii.getImage());
-                        player.addPoints(alien.getPoints());
-                        alien.die();
-                        //agrego el sistema de poderes especiales
-                        player.consecutiveHitPlus1();
-                        deaths++;
-                        shot.die();
+                        && (shotX >= (alienX)
+                        && shotX <= (alienX + alien.getWidth())
+                        && shotY >= (alienY)
+                        && shotY <= (alienY + alien.getHeight()))) {
+                    ImageIcon ii = new ImageIcon(explImg);
+                    // no grafica nunca a la imagen de explosion
+                    alien.setImage(ii.getImage());
+                    player.addPoints(alien.getPoints());
+                    alien.die();
+                    //agrego el sistema de poderes especiales
+                    player.consecutiveHitPlus1();
+                    deaths++;
+                    shot.die();
 
                 }
             }
@@ -275,8 +273,9 @@ public class Board extends JPanel implements Runnable, Commons {
             int playerX = player.getX();
             int playerY = player.getY();
 
-            if (player.isVisible() && !b.isDestroyed()) {       //logica si bomb le pega al player
-                if (bombX >= (playerX)
+            if (player.isVisible()
+                        && !b.isDestroyed()
+                        && bombX >= (playerX)
                         && bombX <= (playerX + PLAYER_WIDTH)
                         && bombY >= (playerY)
                         && bombY <= (playerY + PLAYER_HEIGHT)) {
@@ -293,7 +292,6 @@ public class Board extends JPanel implements Runnable, Commons {
                         player.hit();
                         b.setDestroyed(true);
                     }
-                }
             }
 
             if (!b.isDestroyed()) {
