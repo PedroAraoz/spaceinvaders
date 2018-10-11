@@ -34,7 +34,6 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
 
     private Thread animator;
-    int playerLife = 3;
 
     Grapher grapher = new Grapher();
 
@@ -142,7 +141,7 @@ public class Board extends JPanel implements Runnable, Commons {
         grapher.drawBackground(g, d);
 
         if (ingame) {
-            grapher.drawLives(g, playerLife);
+            grapher.drawLives(g, player.getLife());
             grapher.drawFloor(g);
             drawAliens(g);
             drawPlayer(g);
@@ -285,7 +284,7 @@ public class Board extends JPanel implements Runnable, Commons {
                         && bombX <= (playerX + PLAYER_WIDTH)
                         && bombY >= (playerY)
                         && bombY <= (playerY + PLAYER_HEIGHT)) {
-                    if(playerLife==0) {
+                    if(player.getLife()==0) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
                         player.setImage(ii.getImage());
@@ -294,7 +293,8 @@ public class Board extends JPanel implements Runnable, Commons {
                         b.setDestroyed(true);
                     }
                     else{
-                        playerLife--;
+                        //playerLife--;
+                        player.hit();
                         b.setDestroyed(true);
                     }
                 }
