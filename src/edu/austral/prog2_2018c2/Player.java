@@ -146,14 +146,14 @@ public class Player extends Sprite implements Commons {
     private void doubleDamagePower(){}
     
     public void hit(){
-        boolean b = false;
-        for (int i = 0; i < shields.size();i++) {
-            if (shields.get(i).isAlive()) {
-                b = shields.get(i).hit();
-                break;
+        if (getShieldsAmount() > 0) {
+            for (int i = 0; i < shields.size();i++) {
+                if (shields.get(i).isAlive()) {
+                    shields.get(i).hit();
+                    break;
+                }
             }
-        }
-        if (!b) {
+        } else {
             life--;
         }
     }

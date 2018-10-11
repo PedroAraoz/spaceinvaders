@@ -22,11 +22,10 @@ public class Shield extends Sprite{
   public int getPercentage(){
     return percentage;
   }
-  public boolean hit(){
+  public void hit(){
     percentage -= 2;
     if (percentage <= 0){
       die();
     }
-    return true;
   }
 }
