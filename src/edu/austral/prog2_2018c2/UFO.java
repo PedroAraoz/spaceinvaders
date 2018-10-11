@@ -11,17 +11,21 @@ public class UFO extends Sprite{
   private int width;
   
   
-  public UFO(int x, int y){
-    initUFO(x,y);
+  public UFO(/*int x, int y*/int direction){
+    initUFO(direction);
   }
   
-  private void initUFO(int x, int y) {
+  private void initUFO(/*int x, int y*/int direction) {
     points = 50 + (int)(Math.random()*((300-50) + 1));
-    this.x = x;
-    this.y = y;
+    if (direction == 1) {
+      this.x = 0;
+    } else if (direction == -1) {
+      this.x = 358; // ~~~BOARD_WIDTH!!
+    }
+    this.y = 10;
     height = 10;
     width = 10; // (aca o en commons?????)
-    UFOImg = "src/images/alien3.png";
+    UFOImg = "src/images/UFO.png";
     ImageIcon ii = new ImageIcon(UFOImg);
     setImage(ii.getImage());
     
