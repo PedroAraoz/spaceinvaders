@@ -1,14 +1,20 @@
 package edu.austral.prog2_2018c2;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
 public class Player extends Sprite implements Commons {
-
+    
+    private int life = 3;
     private int points = 0;
     private int consecutiveHits = 0;
 
+    private List<Shield> shields;
+    
     private final int START_Y = 280;
     private final int START_X = 270;
 
@@ -29,6 +35,10 @@ public class Player extends Sprite implements Commons {
         setImage(ii.getImage());
         setX(START_X);
         setY(START_Y);
+        shields = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            shields.add(new Shield());
+        }
     }
 
     public void act() {
@@ -95,7 +105,7 @@ public class Player extends Sprite implements Commons {
     }
 
     public void giveSpecialPower() {
-        int randomNumber = (int) Math.random()*101; //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
+        int randomNumber = (int) (Math.random()*101); //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
 
         if(randomNumber < 10){
             freezePower();
@@ -113,4 +123,20 @@ public class Player extends Sprite implements Commons {
     private void immunityPower(){}
 
     private void doubleDamagePower(){}
+    
+    public void hit(){
+        boolean b = false;
+        for (int i = 0; i < shields.size();i++) {
+            if (shields.get(i).isAlive()) {
+                b = shields.get(i).hit();
+                break;
+            }
+        }
+        if (!b) {
+            life--;
+        }
+    }
+    public int getLife() {
+        return life;
+    }
 }
