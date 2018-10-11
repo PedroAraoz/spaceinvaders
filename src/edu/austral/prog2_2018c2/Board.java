@@ -128,7 +128,9 @@ public class Board extends JPanel implements Runnable, Commons {
         }
     }
     public void drawShield(Graphics g) {
-        grapher.drawImage(g, player.getShields().get(0).getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
+        if (player.getShieldsAmount() > 0) {
+            grapher.drawImage(g, player.getShields().get(0).getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
+        }
     }
     @Override
     public void paintComponent(Graphics g) {
