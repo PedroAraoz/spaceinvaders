@@ -13,6 +13,9 @@ public class Shield extends Sprite{
   public void die(){
     alive = false;
   }
+  public int getPercentage(){
+    return percentage;
+  }
   public boolean hit(){
     percentage -= 2;
     if (percentage <= 0){

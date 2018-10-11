@@ -92,6 +92,25 @@ public class Player extends Sprite implements Commons {
         this.points = points + p;
     }
 
+    public int getShieldsAmount(){
+        int shieldsAmount = 0;
+        for(int i = 0; i<shields.size(); i++){
+            if(shields.get(i).isAlive()){
+                shieldsAmount++;
+            }
+        }
+        return  shieldsAmount;
+    }
+
+    public int getShieldPercentage(){
+        for(int i = 0; i<shields.size(); i++){
+            if(shields.get(i).isAlive()){
+                return shields.get(i).getPercentage();
+            }
+        }
+        return 0;
+    }
+
     public int getConsecutiveHits(){
         return consecutiveHits;
     }

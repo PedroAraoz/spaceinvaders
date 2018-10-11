@@ -140,6 +140,7 @@ public class Board extends JPanel implements Runnable, Commons {
         if (ingame) {
             grapher.drawLives(g, player.getLife());
             grapher.drawPoints(g, player.getPoints());
+            grapher.drawShields(g, player.getShieldsAmount(), player.getShieldPercentage());
             grapher.drawFloor(g);
             drawAliens(g);
             drawPlayer(g);
@@ -173,11 +174,11 @@ public class Board extends JPanel implements Runnable, Commons {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
                 // shot.isvisible dos veces?
-                if (alien.isVisible() && shot.isVisible()) {        //logica si shot le pega al alien
-                    if (shotX >= (alienX)
+                if (alien.isVisible()                       //logica si shot le pega al alien
+                            && (shotX >= (alienX)
                             && shotX <= (alienX + alien.getWidth())
                             && shotY >= (alienY)
-                            && shotY <= (alienY + alien.getHeight())) {
+                            && shotY <= (alienY + alien.getHeight()))) {
                         ImageIcon ii = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
@@ -187,7 +188,7 @@ public class Board extends JPanel implements Runnable, Commons {
                         player.consecutiveHitPlus1();
                         deaths++;
                         shot.die();
-                    }
+
                 }
             }
 
