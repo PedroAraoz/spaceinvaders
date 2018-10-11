@@ -111,10 +111,6 @@ public class Player extends Sprite implements Commons {
         return 0;
     }
 
-    public int getConsecutiveHits(){
-        return consecutiveHits;
-    }
-
     public void consecutiveHitPlus1(){
         this.consecutiveHits++;
         if(consecutiveHits >= 4){
