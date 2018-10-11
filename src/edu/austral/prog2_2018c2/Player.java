@@ -105,7 +105,7 @@ public class Player extends Sprite implements Commons {
     }
 
     public void giveSpecialPower() {
-        int randomNumber = (int) Math.random()*101; //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
+        int randomNumber = (int) (Math.random()*101); //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
 
         if(randomNumber < 10){
             freezePower();
