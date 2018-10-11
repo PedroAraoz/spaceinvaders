@@ -44,4 +44,9 @@ public class Grapher extends JPanel implements Commons {
         g.setColor(Color.white);
         g.drawString("Lives:" + playerLife, 1, 15);
     }
+
+    public void drawPoints(Graphics g, int points){
+        g.setColor(Color.white);
+        g.drawString("Points:" + points, 1, 30);
+    }
 }

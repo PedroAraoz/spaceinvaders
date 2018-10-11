@@ -101,11 +101,7 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     public void drawPlayer(Graphics g) {
-  
-        if (player.isVisible()) {
-
-            grapher.drawImage(g, player.getImage(), player.getX(), player.getY());
-        }
+        grapher.drawImage(g, player.getImage(), player.getX(), player.getY());
     }
 
     public void drawShot(Graphics g) {
@@ -143,6 +139,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         if (ingame) {
             grapher.drawLives(g, player.getLife());
+            grapher.drawPoints(g, player.getPoints());
             grapher.drawFloor(g);
             drawAliens(g);
             drawPlayer(g);
@@ -186,6 +183,7 @@ public class Board extends JPanel implements Runnable, Commons {
                                 = new ImageIcon(explImg);
                         // no grafica nunca a la imagen de explosion
                         alien.setImage(ii.getImage());
+                        player.addPoints(alien.getPoints());
                         alien.die();
                         //agrego el sistema de poderes especiales
                         player.consecutiveHitPlus1();
