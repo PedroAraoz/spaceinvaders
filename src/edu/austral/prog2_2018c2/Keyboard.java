@@ -4,9 +4,9 @@ import java.awt.event.KeyEvent;
 
 public class Keyboard extends KeyAdapter {
 
-    Player player;
-    Shot shot;
-    Board board;
+    private Player player;
+    private Shot shot;
+    private Board board;
 
     public Keyboard(Board board, Player player, Shot shot){
         this.player = player;
