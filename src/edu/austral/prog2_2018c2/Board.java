@@ -53,13 +53,13 @@ public class Board extends JPanel implements Runnable, Commons {
         gameInit();
         setDoubleBuffered(true);
     }
-
-    @Override
+    //~~~ no hace nada????
+    /*@Override
     public void addNotify() {
 
         super.addNotify();
         gameInit();
-    }
+    }*/
 
     public void gameInit() {
 
