@@ -50,7 +50,7 @@ public class Grapher extends JPanel implements Commons {
         g.drawString("Points:" + points, 1, 30);
     }
 
-    public void drawShields(Graphics g, int shields, int percentage){
+    public void drawShieldText(Graphics g, int shields, int percentage){
         g.setColor(Color.white);
         g.drawString("Shields:" + shields + "(" + percentage + "%" + ")", 1, 45);
     }

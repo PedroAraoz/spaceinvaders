@@ -2,12 +2,8 @@ package edu.austral.prog2_2018c2;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -132,8 +128,7 @@ public class Board extends JPanel implements Runnable, Commons {
         }
     }
     public void drawShield(Graphics g) {
-        ImageIcon pp = new ImageIcon("src/images/shield.gif");
-        grapher.drawImage(g, pp.getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
+        grapher.drawImage(g, player.getShields().get(0).getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -143,7 +138,7 @@ public class Board extends JPanel implements Runnable, Commons {
         if (ingame) {
             grapher.drawLives(g, player.getLife());
             grapher.drawPoints(g, player.getPoints());
-            grapher.drawShields(g, player.getShieldsAmount(), player.getShieldPercentage());
+            grapher.drawShieldText(g, player.getShieldsAmount(), player.getShieldPercentage());
             grapher.drawFloor(g);
             drawAliens(g);
             drawPlayer(g);
