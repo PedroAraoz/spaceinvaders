@@ -62,7 +62,7 @@ public class Board extends JPanel implements Runnable, Commons {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
                 String[] rand = {"small", "medium", "big"};
-                Alien alien = new Alien(ALIEN_INIT_X + 18 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
+                Alien alien = new Alien(ALIEN_INIT_X + 25 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
                 aliens.add(alien);
             }
         }
@@ -181,7 +181,7 @@ public class Board extends JPanel implements Runnable, Commons {
                         && shotY >= (alienY)
                         && shotY <= (alienY + alien.getHeight()))) {
 
-                    //Todo lo que viene ahora deberia estar delegado
+                    //T0do lo que viene ahora deberia estar delegado
 
                     ImageIcon ii = new ImageIcon(explImg);
                     //no grafica nunca a la imagen de explosion
