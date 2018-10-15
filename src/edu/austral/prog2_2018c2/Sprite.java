@@ -9,7 +9,8 @@ public class Sprite {
     protected int x;
     protected int y;
     protected int dx;
-
+    private int width;
+    private int height;
     public Sprite() {
 
         visible = true;
@@ -58,5 +59,19 @@ public class Sprite {
     public int getX() {
 
         return x;
+    }
+    
+    public int getWidth() {
+        return width;
+    }
+    
+    public int getHeight() {
+        return height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public void setWidth(int width){
+        this.width = width;
     }
 }

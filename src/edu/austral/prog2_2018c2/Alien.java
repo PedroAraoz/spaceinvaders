@@ -13,11 +13,11 @@ public class Alien extends Invader {
 
         this.x = x;
         this.y = y;
-        
+        setHeight(16);
         switch (type){
-          case "big": points = 10;height = 16;width = 24;Img = "src/images/big.gif";break;
-          case "medium": points = 20;height = 16;width = 22;Img = "src/images/medium.gif";break;
-          case "small": points = 30;height = 16;width = 16;Img = "src/images/small.gif";break;
+          case "big": points = 10;setWidth(24)  ;Img = "src/images/big.gif";break;
+          case "medium": points = 20;setWidth(22);Img = "src/images/medium.gif";break;
+          case "small": points = 30;setWidth(16);Img = "src/images/small.gif";break;
         }
         bomb = new Bomb(x, y);
         ImageIcon ii = new ImageIcon(Img);

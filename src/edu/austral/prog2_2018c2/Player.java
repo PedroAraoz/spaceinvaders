@@ -30,8 +30,8 @@ public class Player extends Sprite implements Commons {
 
         ImageIcon ii = new ImageIcon(playerImg);
 
-        width = ii.getImage().getWidth(null);
-
+        setWidth(ii.getImage().getWidth(null));
+        setHeight(ii.getImage().getHeight(null));
         setImage(ii.getImage());
         setX(START_X);
         setY(START_Y);

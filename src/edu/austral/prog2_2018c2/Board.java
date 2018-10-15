@@ -175,11 +175,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
 
-                if (alien.isVisible()                       //logica si shot le pega al alien
-                        && (shotX >= (alienX)
-                        && shotX <= (alienX + alien.getWidth())
-                        && shotY >= (alienY)
-                        && shotY <= (alienY + alien.getHeight()))) {
+                if (collides(alien, shot)) {
 
                     //T0do lo que viene ahora deberia estar delegado
 
@@ -213,9 +209,9 @@ public class Board extends JPanel implements Runnable, Commons {
 
             int x = alien.getX();
 
-            if (x >= BOARD_WIDTH - BORDER_RIGHT && direction != -1) {
+            if (x >= BOARD_WIDTH - BORDER_RIGHT && direction > 0) {
 
-                direction = -1;
+                direction = -direction;
                 Iterator i1 = aliens.iterator();
 
                 while (i1.hasNext()) {
@@ -225,9 +221,9 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
             }
 
-            if (x <= BORDER_LEFT && direction != 1) {
+            if (x <= BORDER_LEFT && direction < 0) {
 
-                direction = 1;
+                direction = -direction;
 
                 Iterator i2 = aliens.iterator();
 
@@ -267,23 +263,16 @@ public class Board extends JPanel implements Runnable, Commons {
             Bomb b = alien.getBomb();
 
             if (shot == CHANCE && alien.isVisible() && b.isDestroyed()) {
-
+                //~~~ por que bomb tiene setDestroyed si Sprite ya tiene is visible
+                //~~~ no son lo mismo?? solo nos arruina el polimorfismo tener
+                //~~ isDestoyed.
                 b.setDestroyed(false);
                 b.setX(alien.getX());
                 b.setY(alien.getY());
             }
+            
 
-            int bombX = b.getX();
-            int bombY = b.getY();
-            int playerX = player.getX();
-            int playerY = player.getY();
-
-            if (player.isVisible()
-                        && !b.isDestroyed()
-                        && bombX >= (playerX)
-                        && bombX <= (playerX + PLAYER_WIDTH)
-                        && bombY >= (playerY)
-                        && bombY <= (playerY + PLAYER_HEIGHT)) {
+            if (!b.isDestroyed() && collides(player,b)) {
                     if(player.getLife()==0) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
@@ -293,7 +282,6 @@ public class Board extends JPanel implements Runnable, Commons {
                         b.setDestroyed(true);
                     }
                     else{
-                        //playerLife--;
                         player.hit();
                         b.setDestroyed(true);
                     }
@@ -309,6 +297,9 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
         // UFO
+        if (collides(ufo, shot)){
+            ufo.die();
+        }
         if (directionUFO == 1 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {
             ufo.die();
         }
@@ -354,5 +345,18 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public Shot getShot(){
         return shot;
+    }
+    
+    public boolean collides(Sprite receiver, Sprite projectile) {
+        int pX = projectile.getX();
+        int pY = projectile.getY();
+        int rX = receiver.getX();
+        int rY = receiver.getY();
+        return (projectile.isVisible()
+                && receiver.isVisible()
+                && pX >= (rX)
+                && pX <= (rX + receiver.getWidth())
+                && pY >= (rY)
+                && pY <= (rY + receiver.getHeight()));
     }
 }
