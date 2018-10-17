@@ -42,16 +42,16 @@ public class Grapher extends JPanel implements Commons {
 
     public void drawLives(Graphics g, int playerLife){
         g.setColor(Color.white);
-        g.drawString("Lives:" + playerLife, 1, 15);
+        g.drawString("Lives:" + playerLife, 1, 307);
     }
 
     public void drawPoints(Graphics g, int points){
         g.setColor(Color.white);
-        g.drawString("Points:" + points, 1, 30);
+        g.drawString("Points:" + points, 50, 307);
     }
 
     public void drawShieldText(Graphics g, int shields, int percentage){
         g.setColor(Color.white);
-        g.drawString("Shields:" + shields + "(" + percentage + "%" + ")", 1, 45);
+        g.drawString("Shields:" + shields + "(" + percentage + "%" + ")", 100, 307);
     }
 }
