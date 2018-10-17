@@ -24,7 +24,8 @@ public class Board extends JPanel implements Runnable, Commons {
     private int direction = -1;
     private int directionUFO; //ver comentario en gameInit directionUFO
     private int deaths = 0;
-
+    private int level = 1;
+    //~~~ podemos polimorfisar los grapher drawShields, drawPoints, drawLives
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message = "Game Over";
@@ -59,13 +60,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         aliens = new ArrayList<>();
         // creating the aliens
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
-                String[] rand = {"small", "medium", "big"};
-                Alien alien = new Alien(ALIEN_INIT_X + 25 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
-                aliens.add(alien);
-            }
-        }
+        spawnAliens();
 
         player = new Player();
         shot = new Shot();
@@ -80,7 +75,17 @@ public class Board extends JPanel implements Runnable, Commons {
             animator.start();
         }
     }
-
+    
+    private void spawnAliens() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 6; j++) {
+                String[] rand = {"small", "medium", "big"};
+                Alien alien = new Alien(ALIEN_INIT_X + 25 * j, ALIEN_INIT_Y + 18 * i, rand[(int)(Math.random()*3)]);
+                aliens.add(alien);
+            }
+        }
+    }
+    
     public void drawAliens(Graphics g) {
 
         Iterator iterator = aliens.iterator(); //Esto para que lo hace??
@@ -141,6 +146,7 @@ public class Board extends JPanel implements Runnable, Commons {
             grapher.drawPoints(g, player.getPoints());
             grapher.drawShieldText(g, player.getShieldsAmount(), player.getShieldPercentage());
             grapher.drawFloor(g);
+            grapher.drawLevel(g, level);
             drawAliens(g);
             drawPlayer(g);
             drawShot(g);
@@ -157,8 +163,19 @@ public class Board extends JPanel implements Runnable, Commons {
 
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
                                                     // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
-            ingame = false;
-            message = "Game won!";
+            if (level <= 5) {
+                if (direction > 0) {
+                    direction++;
+                } else {
+                    direction--;
+                }
+                level++;
+                deaths = 0;
+                spawnAliens();
+            } else {
+                ingame = false;
+                message = "Game won!";
+            }
         }
 
         // player

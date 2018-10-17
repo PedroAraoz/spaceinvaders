@@ -54,4 +54,8 @@ public class Grapher extends JPanel implements Commons {
         g.setColor(Color.white);
         g.drawString("Shields:" + shields + "(" + percentage + "%" + ")", 100, 307);
     }
+    public void drawLevel(Graphics g, int level){
+        g.setColor(Color.white);
+        g.drawString("Level: " + level, 300, 307);
+    }
 }
