@@ -14,21 +14,11 @@ public class Bomb extends Sprite {
   
   private void initBomb(int x, int y) {
     
-    setDestroyed(true);
+    setVisible(false);
     this.x = x;
     this.y = y;
     ImageIcon ii = new ImageIcon(bombImg);
     setImage(ii.getImage());
     
-  }
-  
-  public void setDestroyed(boolean destroyed) {
-    
-    this.destroyed = destroyed;
-  }
-  
-  public boolean isDestroyed() {
-    
-    return destroyed;
   }
 }

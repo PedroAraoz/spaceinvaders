@@ -17,11 +17,11 @@ public class UFO extends Invader implements Commons{
       this.x = BOARD_WIDTH;
     }
     this.y = 10;
-    setHeight(10);
-    setWidth(10);
+
     Img = "src/images/UFO.png";
     ImageIcon ii = new ImageIcon(Img);
     setImage(ii.getImage());
-    
+    setHeight(ii.getImage().getHeight(null));
+    setWidth(ii.getImage().getWidth(null));
   }
 }

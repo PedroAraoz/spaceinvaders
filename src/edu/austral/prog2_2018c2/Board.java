@@ -113,7 +113,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             Bomb b = a.getBomb();
 
-            if (!b.isDestroyed()) {
+            if (b.isVisible()) {
 
                 grapher.drawImage(g, b.getImage(), b.getX(), b.getY());
             }
@@ -262,37 +262,37 @@ public class Board extends JPanel implements Runnable, Commons {
             int shot = generator.nextInt(15);
             Bomb b = alien.getBomb();
 
-            if (shot == CHANCE && alien.isVisible() && b.isDestroyed()) {
+            if (shot == CHANCE && alien.isVisible() && !b.isVisible()) {
                 //~~~ por que bomb tiene setDestroyed si Sprite ya tiene is visible
                 //~~~ no son lo mismo?? solo nos arruina el polimorfismo tener
                 //~~ isDestoyed.
-                b.setDestroyed(false);
+                b.setVisible(true);
                 b.setX(alien.getX());
                 b.setY(alien.getY());
             }
             
 
-            if (!b.isDestroyed() && collides(player,b)) {
+            if (collides(player,b)) {
                     if(player.getLife()==0) {
                         ImageIcon ii
                                 = new ImageIcon(explImg);
                         player.setImage(ii.getImage());
                         player.die();
                         ingame = false;
-                        b.setDestroyed(true);
+                        b.setVisible(false);
                     }
                     else{
                         player.hit();
-                        b.setDestroyed(true);
+                        b.setVisible(false);
                     }
             }
 
-            if (!b.isDestroyed()) {
+            if (b.isVisible()) {
 
                 b.setY(b.getY() + 1);
 
                 if (b.getY() >= GROUND - BOMB_HEIGHT) {
-                    b.setDestroyed(true);
+                    b.setVisible(false);
                 }
             }
         }
@@ -321,6 +321,7 @@ public class Board extends JPanel implements Runnable, Commons {
             repaint();
             animationCycle();
 
+            
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
 
