@@ -167,13 +167,8 @@ public class Board extends JPanel implements Runnable, Commons {
         // shot
         if (shot.isVisible()) {
 
-            int shotX = shot.getX();
-            int shotY = shot.getY();
-
             for (Alien alien: aliens) {
-
-                int alienX = alien.getX();
-                int alienY = alien.getY();
+              
 
                 if (collides(alien, shot)) {
 
