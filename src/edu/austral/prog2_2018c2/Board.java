@@ -22,7 +22,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
-    private int directionUFO; //ver comentario en gameInit directionUFO
+    private int directionUFO;
     private int deaths = 0;
     private int level = 1;
     //~~~ podemos polimorfisar los grapher drawShields, drawPoints, drawLives
@@ -32,7 +32,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     private Thread animator;
 
-    Grapher grapher = new Grapher();
+    private Grapher grapher = new Grapher();
 
     public Board() {
 
@@ -60,11 +60,11 @@ public class Board extends JPanel implements Runnable, Commons {
         player = new Player();
         shot = new Shot();
         addKeyListener(new Keyboard(this, player, shot));
-        directionUFO = direction; //DirectionUFO no se puede eliminar si siempre va a ser igual a direction? ufo = new UFO(direction);
+        directionUFO = direction;
         ufo = new UFO(directionUFO);
 
 
-        if (animator == null || !ingame) { //este "if" podriamos sacarlo, no?
+        if (animator == null || !ingame) {
 
             animator = new Thread(this);
             animator.start();
@@ -139,7 +139,6 @@ public class Board extends JPanel implements Runnable, Commons {
         if (ingame) {
             grapher.drawLives(g, player.getLife());
             grapher.drawPoints(g, player.getPoints());
-            grapher.drawShieldText(g, player.getShieldsAmount(), player.getShieldPercentage());
             grapher.drawFloor(g);
             grapher.drawLevel(g, level);
             drawAliens(g);
@@ -158,7 +157,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
                                                     // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
-            if (level <= 5) {
+            if (level < 5) {
                 if (direction > 0) {
                     direction++;
                 } else {
@@ -166,6 +165,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
                 level++;
                 deaths = 0;
+                System.out.println("Level passed");
                 spawnAliens();
             } else {
                 ingame = false;
@@ -180,8 +180,7 @@ public class Board extends JPanel implements Runnable, Commons {
         if (shot.isVisible()) {
 
             for (Alien alien: aliens) {
-              
-
+                
                 if (collides(alien, shot)) {
 
                     //T0do lo que viene ahora deberia estar delegado
@@ -296,7 +295,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (b.isVisible()) {
 
-                b.setY(b.getY() + 1);
+                b.setY(b.getY() + Math.abs(direction));
 
                 if (b.getY() >= GROUND - BOMB_HEIGHT) {
                     b.setVisible(false);
@@ -367,5 +366,12 @@ public class Board extends JPanel implements Runnable, Commons {
                 && pX <= (rX + receiver.getWidth())
                 && pY >= (rY)
                 && pY <= (rY + receiver.getHeight()));
+    }
+    
+    public void killeverything(){
+        for (int i = 0; i < aliens.size(); i++) {
+            aliens.get(i).die();
+        }
+        deaths = NUMBER_OF_ALIENS_TO_DESTROY;
     }
 }

@@ -38,6 +38,9 @@ public class Keyboard extends KeyAdapter {
                 board.setShot(new Shot(x, y));
             }
         }
+        if (key == KeyEvent.VK_R){
+            board.killeverything();
+        }
 
         this.shot = board.getShot();
     }

@@ -10,7 +10,7 @@ public interface Commons {
     public static final int GO_DOWN = 15;
     public static final int NUMBER_OF_ALIENS_TO_DESTROY = 24; //Se puede reemplazar con algo que lo calcule solo
     public static final int CHANCE = 5;
-    public static final int DELAY = 17;
+    public static final int DELAY = 15;
     public static final int PLAYER_WIDTH = 15;
     public static final int PLAYER_HEIGHT = 10;
 }
