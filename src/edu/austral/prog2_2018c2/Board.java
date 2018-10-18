@@ -212,7 +212,13 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 }
             }
-
+            for (Shield shield: shields) {
+                if (collides(shield, shot)) {
+                    shield.hit();
+                    shot.die();
+                }
+            
+            }
             int y = shot.getY();
             y -= 4;
 
@@ -295,12 +301,9 @@ public class Board extends JPanel implements Runnable, Commons {
                     b.setVisible(false);
                 }
             }
-
+            //player gets hit
             if (collides(player,b)) {
                     if(player.getLife()==0) {
-                        ImageIcon ii
-                                = new ImageIcon(explImg);
-                        player.setImage(ii.getImage());
                         player.die();
                         ingame = false;
                         b.setVisible(false);
