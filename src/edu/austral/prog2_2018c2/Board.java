@@ -133,6 +133,7 @@ public class Board extends JPanel implements Runnable, Commons {
             grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
+    
     public void drawShield(Graphics g) {
         for(int i = 0; i<4; i++) {
             if (shields.get(i).isVisible()) {
@@ -175,6 +176,11 @@ public class Board extends JPanel implements Runnable, Commons {
                 level++;
                 deaths = 0;
                 System.out.println("Level passed");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 spawnAliens();
             } else {
                 ingame = false;
