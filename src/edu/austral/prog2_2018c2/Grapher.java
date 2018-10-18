@@ -6,9 +6,10 @@ import javax.swing.JPanel;
 
 public class Grapher extends JPanel implements Commons {
     
-    private int ratio = GROUND + (BOARD_HEIGHT - GROUND)/3;
+    private int ratio;
     private String text;
     public Grapher() {
+      ratio = GROUND + (BOARD_HEIGHT - GROUND)/3;
     }
 
     public void drawImage(Graphics g, Image image, int x, int y) {
@@ -20,9 +21,9 @@ public class Grapher extends JPanel implements Commons {
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
         //cuadrado del game over
         g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
+        g.fillRect(50, BOARD_HEIGHT / 2 - 30, BOARD_WIDTH - 100, 50);
         g.setColor(Color.white);
-        g.drawRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
+        g.drawRect(50, BOARD_HEIGHT / 2 - 30, BOARD_WIDTH - 100, 50);
 
         Font small = new Font("Comic Sans", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
@@ -30,10 +31,10 @@ public class Grapher extends JPanel implements Commons {
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(message, (BOARD_WIDTH - metr.stringWidth(message)) / 2,
-                BOARD_WIDTH / 2);
+                BOARD_HEIGHT / 2);
     }
     
-    public void drawText(Graphics g, String text, int x, int y, Color color) {
+    private void drawText(Graphics g, String text, int x, int y, Color color) {
         g.setColor(color);
         g.drawString(text, x, y);
     }

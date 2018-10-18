@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable, Commons {
-
     private Dimension d;
     private ArrayList<Alien> aliens;
     private Player player;
@@ -41,8 +40,7 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     private void initBoard() {
-
-
+        
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
@@ -139,7 +137,6 @@ public class Board extends JPanel implements Runnable, Commons {
         for(int i = 0; i<4; i++) {
             if (shields.get(i).isVisible()) {
                 grapher.drawImage(g, shields.get(i).getImage(), shields.get(i).getX(), shields.get(i).getY());
-                grapher.drawText(g, (shields.get(i).getPercentage()) + "%" , shields.get(i).getX()+11, shields.get(i).getY()+30,  Color.white);
             }
         }
     }

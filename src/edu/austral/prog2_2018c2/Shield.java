@@ -7,7 +7,7 @@ public class Shield extends Sprite{
   private String ShieldImg;
   public Shield(){
     percentage = 100;
-    ShieldImg = "src/images/shield.gif";
+    ShieldImg = "src/images/shield.png";
     ImageIcon ii = new ImageIcon(ShieldImg);
     setImage(ii.getImage());
     setWidth(ii.getImage().getWidth(null));
