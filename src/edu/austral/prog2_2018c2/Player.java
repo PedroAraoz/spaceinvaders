@@ -1,10 +1,8 @@
 package edu.austral.prog2_2018c2;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.ImageIcon;
 
 public class Player extends Sprite implements Commons {
@@ -12,12 +10,21 @@ public class Player extends Sprite implements Commons {
     private int life = 3;
     private int points = 0;
     private int consecutiveHits = 0;
-    
+    private boolean Immune = false;
+    private boolean frozenAliens = false;
+    private boolean doubleDamage = false;
+
+    private boolean powerIsOn = false;
+
     private final int START_Y = 280;
     private final int START_X = 270;
 
-    private final String playerImg = "src/images/player.png";
-    private int width;
+    private String playerImg;
+    private final String ShipImg = "src/images/player.png";
+    private final String ImmunityImg = "src/images/shield.gif";
+
+
+    private int width; //Este para que lo usa?
 
     public Player() {
 
@@ -26,6 +33,7 @@ public class Player extends Sprite implements Commons {
 
     private void initPlayer() {
 
+        playerImg = ShipImg;
         ImageIcon ii = new ImageIcon(playerImg);
 
         setWidth(ii.getImage().getWidth(null));
@@ -87,13 +95,15 @@ public class Player extends Sprite implements Commons {
     }
 
     public void consecutiveHitPlus1(){
-        this.consecutiveHits++;
-        if(consecutiveHits >= 4){
-            giveSpecialPower();
+        if(!powerIsOn) {
+            this.consecutiveHits++;
+            if (consecutiveHits >= 4) {
+                giveSpecialPower();
+            }
         }
     }
 
-    public void resetConsecutiveHits(){
+    public void missedShot(){
         this.consecutiveHits = 0;
     }
 
@@ -112,18 +122,59 @@ public class Player extends Sprite implements Commons {
         else{
             doubleDamagePower();
         }
+        powerIsOn = true;
     }
 
-    private void freezePower(){}
+    private void freezePower(){
+        Timer timer = new Timer();
+        frozenAliens = true;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                frozenAliens = false;
+                powerIsOn = false;
+            }
+        }, 3*1000); //3 segundos
 
-    private void immunityPower(){}
+    }
 
-    private void doubleDamagePower(){}
+    private void immunityPower(){
+        Timer timer = new Timer();
+        Immune = true;
+        playerImg = ImmunityImg;//Hay que hacer que el board actualize la imagen del player
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Immune = false;
+                playerImg = ShipImg;
+                powerIsOn = false;
+            }
+        }, 5*1000); //5 segundos
+
+    }
+
+    private void doubleDamagePower(){
+        Timer timer = new Timer();
+        doubleDamage = true;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                powerIsOn = false;
+            }
+        }, 5*1000); //5 segundos
+    }
     
     public void hit(){
-        life--;
+        if(!Immune) {
+            life--;
+        }
     }
     public int getLife() {
         return life;
+    }
+
+    public boolean isAliensFrozen(){
+        return frozenAliens;
+    }
+
+    public boolean isDoubleDamage() {
+        return doubleDamage;
     }
 }

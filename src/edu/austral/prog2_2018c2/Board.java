@@ -40,12 +40,12 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     private void initBoard() {
-        
+
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
 
-        gameInit();
+        gameInit();//Para que hace esto un metodo aparte? Nunca lo llama en otro lado a gameInit()
         setDoubleBuffered(true);
     }
 
@@ -133,7 +133,7 @@ public class Board extends JPanel implements Runnable, Commons {
             grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
-    
+
     public void drawShield(Graphics g) {
         for(int i = 0; i<4; i++) {
             if (shields.get(i).isVisible()) {
@@ -217,13 +217,17 @@ public class Board extends JPanel implements Runnable, Commons {
                     shield.hit();
                     shot.die();
                 }
-            
+
             }
             int y = shot.getY();
-            y -= 4;
+            int increment = 4;
+            if(player.isDoubleDamage()){
+                increment = increment*2;
+            }
+            y -= increment;
 
             if (y < 0) {
-                player.resetConsecutiveHits();
+                player.missedShot();
                 shot.die();
             } else {
                 shot.setY(y);
@@ -276,8 +280,9 @@ public class Board extends JPanel implements Runnable, Commons {
                     ingame = false;
                     message = "Invasion!";
                 }
-
-                alien.act(direction);
+                if(!player.isAliensFrozen()) {
+                    alien.act(direction);
+                }
             }
         }
 
