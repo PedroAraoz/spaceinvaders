@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable, Commons {
-
     private Dimension d;
     private ArrayList<Alien> aliens;
     private Player player;
@@ -26,7 +25,6 @@ public class Board extends JPanel implements Runnable, Commons {
     private int directionUFO;
     private int deaths = 0;
     private int level = 1;
-    //~~~ podemos polimorfisar los grapher drawShields, drawPoints, drawLives
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message = "Game Over";
@@ -42,7 +40,6 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     private void initBoard() {
-
 
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
@@ -136,11 +133,11 @@ public class Board extends JPanel implements Runnable, Commons {
             grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
+
     public void drawShield(Graphics g) {
         for(int i = 0; i<4; i++) {
             if (shields.get(i).isVisible()) {
                 grapher.drawImage(g, shields.get(i).getImage(), shields.get(i).getX(), shields.get(i).getY());
-                grapher.drawText(g, (shields.get(i).getPercentage()) + "%" , shields.get(i).getX()+11, shields.get(i).getY()+30,  Color.white);
             }
         }
     }
@@ -179,6 +176,11 @@ public class Board extends JPanel implements Runnable, Commons {
                 level++;
                 deaths = 0;
                 System.out.println("Level passed");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 spawnAliens();
             } else {
                 ingame = false;
@@ -210,7 +212,13 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 }
             }
+            for (Shield shield: shields) {
+                if (collides(shield, shot)) {
+                    shield.hit();
+                    shot.die();
+                }
 
+            }
             int y = shot.getY();
             int increment = 4;
             if(player.isDoubleDamage()){
@@ -227,9 +235,9 @@ public class Board extends JPanel implements Runnable, Commons {
         }
 
         // aliens
-        //Esto se puede mover a aliens en vez de que este en board?
 
-        for (Alien alien : aliens) {
+        for (Alien alien: aliens) {
+
             int x = alien.getX();
 
             if (x >= BOARD_WIDTH - BORDER_RIGHT && direction > 0) {
@@ -287,9 +295,6 @@ public class Board extends JPanel implements Runnable, Commons {
             Bomb b = alien.getBomb();
 
             if (shot == CHANCE && alien.isVisible() && !b.isVisible()) {
-                //~~~ por que bomb tiene setDestroyed si Sprite ya tiene is visible
-                //~~~ no son lo mismo?? solo nos arruina el polimorfismo tener
-                //~~ isDestoyed.
                 b.setVisible(true);
                 b.setX(alien.getX());
                 b.setY(alien.getY());
@@ -301,11 +306,9 @@ public class Board extends JPanel implements Runnable, Commons {
                     b.setVisible(false);
                 }
             }
-
+            //player gets hit
             if (collides(player,b)) {
                     if(player.getLife()==0) {
-                        ImageIcon ii = new ImageIcon(explImg);
-                        player.setImage(ii.getImage());
                         player.die();
                         ingame = false;
                         b.setVisible(false);
@@ -320,7 +323,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 b.setY(b.getY() + Math.abs(direction));
 
-                if (b.getY() >= GROUND - BOMB_HEIGHT) {
+                if (b.getY() >= GROUND - b.getHeight()) {
                     b.setVisible(false);
                 }
             }
