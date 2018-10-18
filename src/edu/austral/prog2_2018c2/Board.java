@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -32,6 +33,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     private Thread animator;
 
+    private List<Shield> shields;
     private Grapher grapher = new Grapher();
 
     public Board() {
@@ -57,6 +59,14 @@ public class Board extends JPanel implements Runnable, Commons {
         // creating the aliens
         spawnAliens();
 
+        shields = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            int separation = BOARD_WIDTH/5;
+            shields.add(new Shield());
+            shields.get(i).setY(200);
+            shields.get(i).setX(separation-31 + separation*i);
+        }
+
         player = new Player();
         shot = new Shot();
         addKeyListener(new Keyboard(this, player, shot));
@@ -70,7 +80,7 @@ public class Board extends JPanel implements Runnable, Commons {
             animator.start();
         }
     }
-    
+
     private void spawnAliens() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
@@ -80,7 +90,7 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
     }
-    
+
     public void drawAliens(Graphics g) {
 
         Iterator iterator = aliens.iterator(); //Esto para que lo hace??
@@ -127,8 +137,11 @@ public class Board extends JPanel implements Runnable, Commons {
         }
     }
     public void drawShield(Graphics g) {
-        if (player.getShieldsAmount() > 0) {
-            grapher.drawImage(g, player.getShields().get(0).getImage(), player.getX() - PLAYER_WIDTH - 2, player.getY() - PLAYER_HEIGHT*2);
+        for(int i = 0; i<4; i++) {
+            if (shields.get(i).isVisible()) {
+                grapher.drawImage(g, shields.get(i).getImage(), shields.get(i).getX(), shields.get(i).getY());
+                grapher.drawText(g, (shields.get(i).getPercentage()) + "%" , shields.get(i).getX()+11, shields.get(i).getY()+30,  Color.white);
+            }
         }
     }
     @Override
@@ -180,7 +193,7 @@ public class Board extends JPanel implements Runnable, Commons {
         if (shot.isVisible()) {
 
             for (Alien alien: aliens) {
-                
+
                 if (collides(alien, shot)) {
 
                     //T0do lo que viene ahora deberia estar delegado
@@ -276,7 +289,13 @@ public class Board extends JPanel implements Runnable, Commons {
                 b.setX(alien.getX());
                 b.setY(alien.getY());
             }
-            
+
+            for(int i = 0; i<4; i++) {
+                if (collides(shields.get(i), b)) {
+                    shields.get(i).hit();
+                    b.setVisible(false);
+                }
+            }
 
             if (collides(player,b)) {
                     if(player.getLife()==0) {
@@ -328,7 +347,7 @@ public class Board extends JPanel implements Runnable, Commons {
             repaint();
             animationCycle();
 
-            
+
             timeDiff = System.currentTimeMillis() - beforeTime;
             sleep = DELAY - timeDiff;
 
@@ -354,7 +373,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public Shot getShot(){
         return shot;
     }
-    
+
     public boolean collides(Sprite receiver, Sprite projectile) {
         int pX = projectile.getX();
         int pY = projectile.getY();
@@ -367,7 +386,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 && pY >= (rY)
                 && pY <= (rY + receiver.getHeight()));
     }
-    
+
     public void killeverything(){
         for (int i = 0; i < aliens.size(); i++) {
             aliens.get(i).die();

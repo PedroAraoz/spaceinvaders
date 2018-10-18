@@ -12,8 +12,6 @@ public class Player extends Sprite implements Commons {
     private int life = 3;
     private int points = 0;
     private int consecutiveHits = 0;
-
-    private List<Shield> shields;
     
     private final int START_Y = 280;
     private final int START_X = 270;
@@ -35,10 +33,6 @@ public class Player extends Sprite implements Commons {
         setImage(ii.getImage());
         setX(START_X);
         setY(START_Y);
-        shields = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            shields.add(new Shield());
-        }
     }
 
     public void act() {
@@ -92,25 +86,6 @@ public class Player extends Sprite implements Commons {
         this.points = points + p;
     }
 
-    public int getShieldsAmount(){
-        int shieldsAmount = 0;
-        for(int i = 0; i<shields.size(); i++){
-            if(shields.get(i).isAlive()){
-                shieldsAmount++;
-            }
-        }
-        return  shieldsAmount;
-    }
-
-    public int getShieldPercentage(){
-        for(int i = 0; i<shields.size(); i++){
-            if(shields.get(i).isAlive()){
-                return shields.get(i).getPercentage();
-            }
-        }
-        return 0;
-    }
-
     public void consecutiveHitPlus1(){
         this.consecutiveHits++;
         if(consecutiveHits >= 4){
@@ -146,21 +121,9 @@ public class Player extends Sprite implements Commons {
     private void doubleDamagePower(){}
     
     public void hit(){
-        if (getShieldsAmount() > 0) {
-            for (int i = 0; i < shields.size();i++) {
-                if (shields.get(i).isAlive()) {
-                    shields.get(i).hit();
-                    break;
-                }
-            }
-        } else {
             life--;
-        }
     }
     public int getLife() {
         return life;
-    }
-    public List<Shield> getShields(){
-        return shields;
     }
 }
