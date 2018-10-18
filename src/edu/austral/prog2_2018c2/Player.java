@@ -22,10 +22,7 @@ public class Player extends Sprite implements Commons {
     private String playerImg;
     private final String ShipImg = "src/images/player.png";
     private final String ImmunityImg = "src/images/shield.gif";
-
-
-    private int width; //Este para que lo usa?
-
+    
     public Player() {
 
         initPlayer();
@@ -51,8 +48,8 @@ public class Player extends Sprite implements Commons {
             x = 2;
         }
 
-        if (x >= BOARD_WIDTH - 2 * width) {
-            x = BOARD_WIDTH - 2 * width;
+        if (x >= BOARD_WIDTH - 2 * getWidth()) {
+            x = BOARD_WIDTH - 2 * getWidth();
         }
     }
 
