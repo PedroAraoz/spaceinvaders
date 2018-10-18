@@ -48,7 +48,7 @@ public class Board extends JPanel implements Runnable, Commons {
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
         setBackground(Color.black);
 
-        gameInit();
+        gameInit();//Para que hace esto un metodo aparte? Nunca lo llama en otro lado a gameInit()
         setDoubleBuffered(true);
     }
 
@@ -212,10 +212,14 @@ public class Board extends JPanel implements Runnable, Commons {
             }
 
             int y = shot.getY();
-            y -= 4;
+            int increment = 4;
+            if(player.isDoubleDamage()){
+                increment = increment*2;
+            }
+            y -= increment;
 
             if (y < 0) {
-                player.resetConsecutiveHits();
+                player.missedShot();
                 shot.die();
             } else {
                 shot.setY(y);
@@ -223,9 +227,9 @@ public class Board extends JPanel implements Runnable, Commons {
         }
 
         // aliens
+        //Esto se puede mover a aliens en vez de que este en board?
 
-        for (Alien alien: aliens) {
-
+        for (Alien alien : aliens) {
             int x = alien.getX();
 
             if (x >= BOARD_WIDTH - BORDER_RIGHT && direction > 0) {
@@ -268,8 +272,9 @@ public class Board extends JPanel implements Runnable, Commons {
                     ingame = false;
                     message = "Invasion!";
                 }
-
-                alien.act(direction);
+                if(!player.isAliensFrozen()) {
+                    alien.act(direction);
+                }
             }
         }
 
@@ -299,8 +304,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (collides(player,b)) {
                     if(player.getLife()==0) {
-                        ImageIcon ii
-                                = new ImageIcon(explImg);
+                        ImageIcon ii = new ImageIcon(explImg);
                         player.setImage(ii.getImage());
                         player.die();
                         ingame = false;
