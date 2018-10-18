@@ -9,7 +9,7 @@ public class UFO extends Invader implements Commons{
     initUFO(direction);
   }
   
-  private void initUFO(int direction) {
+  public void initUFO(int direction) {
     points = 50 + (int)(Math.random()*((300-50) + 1));
     if (direction == 1) {
       this.x = 0;

@@ -326,7 +326,7 @@ public class Board extends JPanel implements Runnable, Commons {
             ufo.die();
             player.addPoints(ufo.getPoints());
         }
-        if (directionUFO > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {
+        if (directionUFO > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {//walls como objects y que haga collides con wall
             ufo.die();
         }
         if (directionUFO < 0 && ufo.getX() <= 0){
