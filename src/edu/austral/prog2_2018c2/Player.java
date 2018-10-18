@@ -140,13 +140,14 @@ public class Player extends Sprite implements Commons {
         Timer timer = new Timer();
         Immune = true;
         playerImg = ImmunityImg;//Hay que hacer que el board actualize la imagen del player
+        int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
                 Immune = false;
                 playerImg = ShipImg;
                 powerIsOn = false;
             }
-        }, 5*1000); //5 segundos
+        }, time*1000); //3-5 segundos
 
     }
 

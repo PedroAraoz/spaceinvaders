@@ -29,7 +29,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message = "Game Over";
     private long timerUFO;
-
+    private int random;
     private Thread animator;
 
     private List<Shield> shields;
@@ -49,7 +49,7 @@ public class Board extends JPanel implements Runnable, Commons {
         gameInit();//Para que hace esto un metodo aparte? Nunca lo llama en otro lado a gameInit()
         setDoubleBuffered(true);
         timerUFO = System.currentTimeMillis();
-
+        random = 45 + (int)(Math.random() * ((60 - 45) + 1));
     }
 
 
@@ -328,11 +328,11 @@ public class Board extends JPanel implements Runnable, Commons {
         }
         // UFO
         long newTime = System.currentTimeMillis();
-        int MinUfo = 45;
-        int MaxUfo = 60;
-        if(newTime - timerUFO > MinUfo + (int)(Math.random() * ((MaxUfo - MinUfo) + 1))){
+        if (newTime - timerUFO >= 1000*random){
             directionUFO = direction;
             ufo = new UFO(directionUFO);
+            timerUFO = newTime;
+            random = 45 + (int)(Math.random() * ((60 - 45) + 1));
         }
 
         if (collides(ufo, shot)){
