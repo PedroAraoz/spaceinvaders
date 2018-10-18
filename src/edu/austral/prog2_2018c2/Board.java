@@ -168,20 +168,7 @@ public class Board extends JPanel implements Runnable, Commons {
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
                                                     // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
             if (level < 5) {
-                if (direction > 0) {
-                    direction++;
-                } else {
-                    direction--;
-                }
-                level++;
-                deaths = 0;
-                System.out.println("Level passed");
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                spawnAliens();
+                levelUp();
             } else {
                 ingame = false;
                 message = "Game won!";
@@ -405,5 +392,28 @@ public class Board extends JPanel implements Runnable, Commons {
             aliens.get(i).die();
         }
         deaths = NUMBER_OF_ALIENS_TO_DESTROY;
+    }
+
+    public void levelUp(){
+        if (direction > 0) {
+            direction++;
+        }
+        else {
+            direction--;
+        }
+        level++;
+        deaths = 0;
+        for(int i=0; i<4; i++) {
+            if(shields.get(i).isVisible()) {
+                shields.get(i).die();
+                break;
+            }
+        }
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        spawnAliens();
     }
 }
