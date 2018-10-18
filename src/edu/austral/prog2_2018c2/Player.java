@@ -154,11 +154,12 @@ public class Player extends Sprite implements Commons {
         System.out.println("Double Damage");
         Timer timer = new Timer();
         doubleDamage = true;
+        int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
                 powerIsOn = false;
             }
-        }, 5*1000); //5 segundos
+        }, time*1000); //3-5 segundos
     }
     
     public void hit(){
