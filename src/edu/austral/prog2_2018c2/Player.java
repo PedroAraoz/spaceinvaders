@@ -22,10 +22,7 @@ public class Player extends Sprite implements Commons {
     private String playerImg;
     private final String ShipImg = "src/images/player.png";
     private final String ImmunityImg = "src/images/shield.gif";
-
-
-    private int width; //Este para que lo usa?
-
+    
     public Player() {
 
         initPlayer();
@@ -51,8 +48,8 @@ public class Player extends Sprite implements Commons {
             x = 2;
         }
 
-        if (x >= BOARD_WIDTH - 2 * width) {
-            x = BOARD_WIDTH - 2 * width;
+        if (x >= BOARD_WIDTH - 2 * getWidth()) {
+            x = BOARD_WIDTH - 2 * getWidth();
         }
     }
 
@@ -126,6 +123,7 @@ public class Player extends Sprite implements Commons {
     }
 
     private void freezePower(){
+        System.out.println("Freeze Power");
         Timer timer = new Timer();
         frozenAliens = true;
         timer.schedule(new TimerTask() {
@@ -138,6 +136,7 @@ public class Player extends Sprite implements Commons {
     }
 
     private void immunityPower(){
+        System.out.println("Immunity Power");
         Timer timer = new Timer();
         Immune = true;
         playerImg = ImmunityImg;//Hay que hacer que el board actualize la imagen del player
@@ -152,13 +151,15 @@ public class Player extends Sprite implements Commons {
     }
 
     private void doubleDamagePower(){
+        System.out.println("Double Damage");
         Timer timer = new Timer();
         doubleDamage = true;
+        int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
                 powerIsOn = false;
             }
-        }, 5*1000); //5 segundos
+        }, time*1000); //3-5 segundos
     }
     
     public void hit(){
