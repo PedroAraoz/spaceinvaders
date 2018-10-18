@@ -26,7 +26,6 @@ public class Board extends JPanel implements Runnable, Commons {
     private int directionUFO;
     private int deaths = 0;
     private int level = 1;
-    //~~~ podemos polimorfisar los grapher drawShields, drawPoints, drawLives
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message = "Game Over";
@@ -282,9 +281,6 @@ public class Board extends JPanel implements Runnable, Commons {
             Bomb b = alien.getBomb();
 
             if (shot == CHANCE && alien.isVisible() && !b.isVisible()) {
-                //~~~ por que bomb tiene setDestroyed si Sprite ya tiene is visible
-                //~~~ no son lo mismo?? solo nos arruina el polimorfismo tener
-                //~~ isDestoyed.
                 b.setVisible(true);
                 b.setX(alien.getX());
                 b.setY(alien.getY());
@@ -316,7 +312,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 b.setY(b.getY() + Math.abs(direction));
 
-                if (b.getY() >= GROUND - BOMB_HEIGHT) {
+                if (b.getY() >= GROUND - b.getHeight()) {
                     b.setVisible(false);
                 }
             }

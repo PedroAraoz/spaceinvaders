@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 
 
 public class Grapher extends JPanel implements Commons {
+    
+    private int ratio = GROUND + (BOARD_HEIGHT - GROUND)/3;
+    private String text;
     public Grapher() {
     }
 
@@ -46,14 +49,20 @@ public class Grapher extends JPanel implements Commons {
     }
 
     public void drawLives(Graphics g, int playerLife){
-        drawText(g,"Lives: "+playerLife,1, 307, Color.white);
+        drawText(g,"Lives: "+playerLife,BORDER_LEFT, ratio, Color.white);
     }
 
     public void drawPoints(Graphics g, int points){
-        drawText(g,"Points: "+points, 50, 307, Color.white);
+        text = "Points: " + points;
+        FontMetrics font = g.getFontMetrics();
+        int x = font.stringWidth(text);
+        drawText(g,text, (BOARD_WIDTH - x)/2, ratio, Color.white);
     }
     public void drawLevel(Graphics g, int level){
+        FontMetrics font = g.getFontMetrics();
+        text = "Level: " + level;
+        int x =font.stringWidth(text);
         g.setColor(Color.white);
-        g.drawString("Level: " + level, 300, 307);
+        g.drawString(text, BOARD_WIDTH-BORDER_RIGHT-x, ratio);
     }
 }
