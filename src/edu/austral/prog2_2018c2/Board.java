@@ -310,6 +310,12 @@ public class Board extends JPanel implements Runnable, Commons {
                     }
                     else{
                         player.hit();
+                        for (Shield shield: shields) {
+                          if (shield.isVisible()){
+                            player.setX(shield.getX() + (shield.getWidth() - player.getWidth())/2);
+                            break;
+                          }
+                        }
                         b.setVisible(false);
                     }
             }

@@ -121,7 +121,7 @@ public class Player extends Sprite implements Commons {
     private void doubleDamagePower(){}
     
     public void hit(){
-            life--;
+        life--;
     }
     public int getLife() {
         return life;
