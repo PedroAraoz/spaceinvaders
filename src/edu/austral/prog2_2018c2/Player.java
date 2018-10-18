@@ -126,6 +126,7 @@ public class Player extends Sprite implements Commons {
     }
 
     private void freezePower(){
+        System.out.println("Freeze Power");
         Timer timer = new Timer();
         frozenAliens = true;
         timer.schedule(new TimerTask() {
@@ -138,6 +139,7 @@ public class Player extends Sprite implements Commons {
     }
 
     private void immunityPower(){
+        System.out.println("Immunity Power");
         Timer timer = new Timer();
         Immune = true;
         playerImg = ImmunityImg;//Hay que hacer que el board actualize la imagen del player
@@ -152,6 +154,7 @@ public class Player extends Sprite implements Commons {
     }
 
     private void doubleDamagePower(){
+        System.out.println("Double Damage");
         Timer timer = new Timer();
         doubleDamage = true;
         timer.schedule(new TimerTask() {
