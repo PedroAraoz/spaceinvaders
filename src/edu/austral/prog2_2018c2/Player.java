@@ -179,4 +179,8 @@ public class Player extends Sprite implements Commons {
     public boolean isDoubleDamage() {
         return doubleDamage;
     }
+    
+    public boolean isImmune() {
+        return Immune;
+    }
 }

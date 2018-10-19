@@ -54,7 +54,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
 
     public void gameInit() {
-
+        
         aliens = new ArrayList<>();
         // creating the aliens
         spawnAliens();
@@ -148,6 +148,7 @@ public class Board extends JPanel implements Runnable, Commons {
     }
     @Override
     public void paintComponent(Graphics g) {
+        //~~~~~~ Grapher new gr
         super.paintComponent(g);
         grapher.drawBackground(g, d);
 
@@ -307,11 +308,13 @@ public class Board extends JPanel implements Runnable, Commons {
                     }
                     else{
                         player.hit();
-                        for (Shield shield: shields) {
-                          if (shield.isVisible()){
-                            player.setX(shield.getX() + (shield.getWidth() - player.getWidth())/2);
-                            break;
-                          }
+                        if (!player.isImmune()) {
+                            for (Shield shield: shields) {
+                                if (shield.isVisible()){
+                                    player.setX(shield.getX() + (shield.getWidth() - player.getWidth())/2);
+                                    break;
+                                }
+                            }
                         }
                         b.setVisible(false);
                     }
