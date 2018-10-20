@@ -1,6 +1,6 @@
 package edu.austral.prog2_2018c2;
 
-public class Score {
+public class Score implements Comparable{
 
     private String name;
     private int score;
@@ -16,6 +16,17 @@ public class Score {
         return name+serializeSplitParameter+score;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        if(score > ((Score) o).getScore()){
+            return 1;
+        }
+        else if (score < ((Score) o).getScore()){
+            return -1;
+        }
+        else return 0;
+    }
+
     public int getScore() {
         return score;
     }
@@ -28,4 +39,6 @@ public class Score {
         String[] splittedString = string.split(serializeSplitParameter);
         return new Score(splittedString[0], splittedString[1]);
     }
+
+
 }

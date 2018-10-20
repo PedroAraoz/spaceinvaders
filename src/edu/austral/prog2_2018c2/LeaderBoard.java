@@ -8,7 +8,7 @@ public class LeaderBoard { //Podriamos hacer que este objeto sea un metodo estat
     private List<Score> scores;
 
     public LeaderBoard(){
-        scores = new ArrayList<>(); //Podriamos hacer una Sorted List y sortearla por el int de scores pero para eso hay q implementar comparable en score
+        scores = new ArrayList<Score>(); //Podriamos hacer una Sorted List y sortearla por el int de scores pero para eso hay q hacer algo de un comparator
     }
 
     public void addScore(Score score){
