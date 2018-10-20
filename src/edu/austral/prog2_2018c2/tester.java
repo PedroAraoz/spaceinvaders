@@ -3,6 +3,7 @@ package edu.austral.prog2_2018c2;
 import org.junit.Test;
 
 public class tester {
+
   @Test
   public void aaa(){
     int Min = 50;
@@ -13,5 +14,12 @@ public class tester {
         throw new RuntimeException("The randomizer is wrong!");
       }
     }
+  }
+
+  @Test
+  public void bbb(){
+    Score s = Score.deserialize("b:1");
+    String sName = s.getName();
+    int sScore = s.getScore();
   }
 }
