@@ -37,7 +37,7 @@ public class Score implements Comparable{
 
     public static Score deserialize(String string){
         String[] splittedString = string.split(serializeSplitParameter);
-        return new Score(splittedString[0], splittedString[1]);
+        return new Score(splittedString[0], Integer.parseInt(splittedString[1]));
     }
 
 
