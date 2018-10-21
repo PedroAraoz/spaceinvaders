@@ -29,7 +29,7 @@ public class LeaderBoardManager { //Habria como que hacer un tester de esto...
     
     public void save(){
         try {
-            FileWriter fw = new FileWriter("LeaderBoardManager.txt");
+            FileWriter fw = new FileWriter("LeaderBoard.txt");
             for (Score score : scores) {
                 fw.write(score.serialize());
             }
@@ -43,7 +43,7 @@ public class LeaderBoardManager { //Habria como que hacer un tester de esto...
 
     public void load(){
         try {
-            FileReader fr = new FileReader("LeaderBoardManager.txt");
+            FileReader fr = new FileReader("LeaderBoard.txt");
             BufferedReader br = new BufferedReader(fr);
             String s;
             while ((s = br.readLine()) != null){
