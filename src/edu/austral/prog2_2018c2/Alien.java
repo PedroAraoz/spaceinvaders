@@ -3,8 +3,10 @@ package edu.austral.prog2_2018c2;
 import javax.swing.ImageIcon;
 
 public class Alien extends Invader {
+
     private Bomb bomb;
     //private final String alienImg = "src/images/alien.png";
+
     public Alien(int x, int y, String type) {
         initAlien(x, y, type);
     }

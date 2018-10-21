@@ -2,31 +2,34 @@ package edu.austral.prog2_2018c2;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class LeaderBoard { 
+public class LeaderBoardManager { //Habria como que hacer un tester de esto...
     
     private List<Score> scores;
 
-    public LeaderBoard(){
+    public LeaderBoardManager(){
         scores = new ArrayList<Score>() {//Aca armo una lista que se mantiene a si misma ordenada por puntaje del Score
             @Override
             public boolean add(Score score){
                 super.add(score);
-                Collections.sort(this, (Score::compareTo));
+                this.sort((Score::compareTo));
                 return true;
             }
         };
     }
 
-    public void addScore(Score score){
+    public void addScore(Score score){ //No lo usamos tecnicamente pero lo dejo porque why not. Usariamos el de abajo
         scores.add(score);
+    }
+
+    public void addScore(String name, int score){
+        scores.add(new Score(name, score));
     }
     
     public void save(){
         try {
-            FileWriter fw = new FileWriter("LeaderBoard.txt");
+            FileWriter fw = new FileWriter("LeaderBoardManager.txt");
             for (Score score : scores) {
                 fw.write(score.serialize());
             }
@@ -38,11 +41,11 @@ public class LeaderBoard {
         }
     }
 
-    public void Load(){
+    public void load(){
         try {
-            FileReader fr = new FileReader("LeaderBoard.txt");
+            FileReader fr = new FileReader("LeaderBoardManager.txt");
             BufferedReader br = new BufferedReader(fr);
-            String s = null;
+            String s;
             while ((s = br.readLine()) != null){
                 scores.add(Score.deserialize(s));
             }
