@@ -6,10 +6,11 @@ import java.util.List;
 
 public class LeaderBoardManager { //Habria como que hacer un tester de esto...
     
-    private List<Score> scores;
+    private List<Score> LeaderBoard;
+    private String FileName = "LeaderBoard.txt";
 
     public LeaderBoardManager(){
-        scores = new ArrayList<Score>() {//Aca armo una lista que se mantiene a si misma ordenada por puntaje del Score
+        LeaderBoard = new ArrayList<Score>() {//Aca armo una lista que se mantiene a si misma ordenada por puntaje del Score
             @Override
             public boolean add(Score score){
                 super.add(score);
@@ -20,17 +21,17 @@ public class LeaderBoardManager { //Habria como que hacer un tester de esto...
     }
 
     public void addScore(Score score){ //No lo usamos tecnicamente pero lo dejo porque why not. Usariamos el de abajo
-        scores.add(score);
+        LeaderBoard.add(score);
     }
 
     public void addScore(String name, int score){
-        scores.add(new Score(name, score));
+        LeaderBoard.add(new Score(name, score));
     }
     
     public void save(){
         try {
-            FileWriter fw = new FileWriter("LeaderBoard.txt");
-            for (Score score : scores) {
+            FileWriter fw = new FileWriter(FileName);
+            for (Score score : LeaderBoard) {
                 fw.write(score.serialize());
             }
             fw.close();
@@ -43,11 +44,11 @@ public class LeaderBoardManager { //Habria como que hacer un tester de esto...
 
     public void load(){
         try {
-            FileReader fr = new FileReader("LeaderBoard.txt");
+            FileReader fr = new FileReader(FileName);
             BufferedReader br = new BufferedReader(fr);
             String s;
             while ((s = br.readLine()) != null){
-                scores.add(Score.deserialize(s));
+                LeaderBoard.add(Score.deserialize(s));
             }
             br.close();
         } catch (FileNotFoundException e) {
