@@ -17,9 +17,9 @@ public class tester {
   }
 
   @Test
-  public void bbb(){
+  public void deserializeDebugger(){
     Score s = Score.deserialize("b:1");
-    String sName = s.getName();
-    int sScore = s.getScore();
+    String sName = s.getName(); //Expects b
+    int sScore = s.getScore(); //Expects 1
   }
 }
