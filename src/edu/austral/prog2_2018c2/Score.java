@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Score implements Comparable{
+public class Score implements Comparable<Score> {
 
     private String name;
     private int score;
@@ -19,7 +19,7 @@ public class Score implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Score o) {
         if(score > ((Score) o).getScore()){
             return 1;
         }
