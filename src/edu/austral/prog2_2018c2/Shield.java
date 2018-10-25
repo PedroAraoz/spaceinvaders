@@ -3,8 +3,10 @@ package edu.austral.prog2_2018c2;
 import javax.swing.*;
 
 public class Shield extends Sprite{
+
   private int percentage;
   private String ShieldImg;
+
   public Shield(){
     percentage = 100;
     ShieldImg = "src/images/shield.png";
@@ -13,6 +15,7 @@ public class Shield extends Sprite{
     setWidth(ii.getImage().getWidth(null));
     setHeight(ii.getImage().getHeight(null));
   }
+
   public int getPercentage(){
     return percentage;
   }
@@ -22,4 +25,5 @@ public class Shield extends Sprite{
       setVisible(false);
     }
   }
+
 }
