@@ -174,7 +174,7 @@ public class Board extends JPanel implements Runnable, Commons {
             if (level < 5) {
                 levelUp();
             } else {
-                ingame = false;
+                gameOver();
                 message = "Game won!";
             }
         }
@@ -268,7 +268,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 int y = alien.getY();
 
                 if (y > GROUND - alien.getHeight()) {
-                    ingame = false;
+                    gameOver();
                     message = "Invasion!";
                 }
                 if(!player.isAliensFrozen()) {
@@ -301,8 +301,8 @@ public class Board extends JPanel implements Runnable, Commons {
             if (collides(player,b)) {
                     if(player.getLife()==0) {
                         player.die();
-                        ingame = false;
                         b.setVisible(false);
+                        gameOver();
                     }
                     else{
                         player.hit();
@@ -429,5 +429,12 @@ public class Board extends JPanel implements Runnable, Commons {
             e.printStackTrace();
         }
         spawnAliens();
+    }
+    public void gameOver(){
+        ingame = false;
+        List<Score> leaderBoard = Score.load();
+        Score s = new Score(player.getName(),player.getPoints());
+        leaderBoard.add(s);
+        Score.save(leaderBoard);
     }
 }

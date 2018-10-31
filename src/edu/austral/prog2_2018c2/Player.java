@@ -183,4 +183,6 @@ public class Player extends Sprite implements Commons {
     public boolean isImmune() {
         return Immune;
     }
+    
+    public String getName() {return "" + Math.random();}
 }

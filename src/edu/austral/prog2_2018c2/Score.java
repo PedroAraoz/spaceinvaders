@@ -8,6 +8,8 @@ public class Score implements Comparable<Score> {
 
     private String name;
     private int score;
+    private static String serializeSplitParameter = ":";
+    private static String FileName = "C:/Users/Pedro/Desktop/TXT.txt";
 
     public Score(String name, int score){
         this.name = name;
@@ -38,10 +40,7 @@ public class Score implements Comparable<Score> {
     }
 
      //Static methods
-
-    private static String serializeSplitParameter = ":";
-    private static String FileName = "LeaderBoard.txt";
-
+    
     public static Score deserialize(String string){
         String[] splittedString = string.split(serializeSplitParameter);
         return new Score(splittedString[0], Integer.parseInt(splittedString[1]));
@@ -51,7 +50,9 @@ public class Score implements Comparable<Score> {
         try {
             FileWriter fw = new FileWriter(FileName);
             for (Score score : LeaderBoard) {
-                fw.write(score.serialize());
+                String txt = score.serialize() + System.getProperty( "line.separator" );
+                fw.write(txt);
+                System.out.println("beep boop");
             }
             fw.close();
         } catch (FileNotFoundException e) {
@@ -74,10 +75,11 @@ public class Score implements Comparable<Score> {
                     return true;
                 }
             };
-            String s;
+            String line;
 
-            while ((s = br.readLine()) != null){
-                LeaderBoard.add(Score.deserialize(s));
+            while ((line = br.readLine()) != null){
+                LeaderBoard.add(Score.deserialize(line));
+                System.out.println("aaaaaaaa");
             }
             br.close();
 
