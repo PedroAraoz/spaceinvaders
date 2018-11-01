@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 public class SpaceInvaders extends JFrame implements Commons {
-
     public SpaceInvaders() {
-
         initUI();
     }
 

@@ -41,4 +41,19 @@ public class tester {
     a = Score.load();
     System.out.println("a");
   }
+  @Test
+  public void aaa(){
+    Player p = new Player();
+    Alien a = new Alien(0,0, "small");
+    Bomb b = new Bomb(0,0);
+    Shield shield = new Shield();
+    Shot shot = new Shot();
+    p.interactsWith(b);
+    shot.interactsWith(a);
+    shot.interactsWith(shield);
+    a.interactsWith(shield);
+    a.interactsWith(shot);
+    b.interactsWith(shield);
+    b.interactsWith(p);
+  }
 }

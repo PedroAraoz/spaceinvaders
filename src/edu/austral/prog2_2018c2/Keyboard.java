@@ -9,9 +9,9 @@ public class Keyboard extends KeyAdapter {
     private Shot shot;
     private Board board;
 
-    public Keyboard(Board board, Player player, Shot shot){
-        this.player = player;
-        this.shot = shot;
+    public Keyboard(Board board){
+        this.player = board.getPlayer();
+        this.shot = board.getShot();
         this.board = board;
     }
 
