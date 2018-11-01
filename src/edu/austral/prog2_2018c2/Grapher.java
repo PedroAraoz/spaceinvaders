@@ -1,22 +1,24 @@
 package edu.austral.prog2_2018c2;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 public class Grapher extends JPanel implements Commons {
     
     private int ratio;
     private String text;
-    public Grapher() {
+    Graphics g;
+    public Grapher(Graphics g) {
       ratio = GROUND + (BOARD_HEIGHT - GROUND)/3;
+      this.g = g;
     }
 
-    public void drawImage(Graphics g, Image image, int x, int y) {
+    public void drawImage(Image image, int x, int y) {
         g.drawImage(image, x, y, this);
     }
 
-    public void endGame(Graphics g, String message) {
+    public void endGame(String message) {
         g.setColor(Color.black);
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
         //cuadrado del game over
@@ -34,32 +36,32 @@ public class Grapher extends JPanel implements Commons {
                 BOARD_HEIGHT / 2);
     }
     
-    private void drawText(Graphics g, String text, int x, int y, Color color) {
+    private void drawText(String text, int x, int y, Color color) {
         g.setColor(color);
         g.drawString(text, x, y);
     }
     
-    public void drawFloor(Graphics g){
+    public void drawFloor(){
         g.setColor(Color.white);
         g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
     }
 
-    public void drawBackground(Graphics g, Dimension d){
+    public void drawBackground(Dimension d){
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
     }
 
-    public void drawLives(Graphics g, int playerLife){
-        drawText(g,"Lives: "+playerLife,BORDER_LEFT, ratio, Color.white);
+    public void drawLives(int playerLife){
+        drawText("Lives: "+playerLife,BORDER_LEFT, ratio, Color.white);
     }
 
-    public void drawPoints(Graphics g, int points){
+    public void drawPoints(int points){
         text = "Points: " + points;
         FontMetrics font = g.getFontMetrics();
         int x = font.stringWidth(text);
-        drawText(g,text, (BOARD_WIDTH - x)/2, ratio, Color.white);
+        drawText(text, (BOARD_WIDTH - x)/2, ratio, Color.white);
     }
-    public void drawLevel(Graphics g, int level){
+    public void drawLevel(int level){
         FontMetrics font = g.getFontMetrics();
         text = "Level: " + level;
         int x =font.stringWidth(text);
