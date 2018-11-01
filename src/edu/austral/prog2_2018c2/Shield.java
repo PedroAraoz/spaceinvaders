@@ -2,7 +2,7 @@ package edu.austral.prog2_2018c2;
 
 import javax.swing.*;
 
-public class Shield extends Sprite{
+public class Shield extends Sprite implements GameObject{
 
   private int percentage;
   private String ShieldImg;
@@ -25,5 +25,8 @@ public class Shield extends Sprite{
       setVisible(false);
     }
   }
-
+  @Override
+  public void collided(Movable m) {
+    m.collideWithShield(this);
+  }
 }

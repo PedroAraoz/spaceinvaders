@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
 
-public class Player extends Sprite implements Commons {
+public class Player extends Sprite implements GameObject, Movable, Commons {
     
     private int life = 3;
     private int points = 0;
@@ -185,4 +185,17 @@ public class Player extends Sprite implements Commons {
     }
     
     public String getName() {return "" + Math.random();}
+    
+    
+    
+    
+    @Override
+    public void collided(Movable m) {
+        m.collideWithPlayer(this);
+    }
+    @Override
+    public void collideWithBomb(Bomb b) {
+        System.out.println("player collided with bomb");
+    }
+    
 }

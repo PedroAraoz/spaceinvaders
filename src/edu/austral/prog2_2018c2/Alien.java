@@ -2,7 +2,7 @@ package edu.austral.prog2_2018c2;
 
 import javax.swing.ImageIcon;
 
-public class Alien extends Invader {
+public class Alien extends Invader implements GameObject, Movable{
 
     private Bomb bomb;
 
@@ -29,5 +29,16 @@ public class Alien extends Invader {
     public Bomb getBomb() {
 
         return bomb;
+    }
+    @Override
+    public void collided(Movable m) {
+      m.collideWithAlien(this);
+    }
+    @Override
+    public void collideWithShield(Shield shield) {
+      System.out.println("asdjiasdjasdasdasd shie");
+    }
+    public void collideWithShot(Shot shot){
+      System.out.println("asdasdasdasdasd shot");
     }
 }
