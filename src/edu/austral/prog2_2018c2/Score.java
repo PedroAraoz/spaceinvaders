@@ -72,6 +72,9 @@ public class Score implements Comparable<Score> {
                 public boolean add(Score score) {
                     super.add(score);
                     this.sort((Score::compareTo));
+                    if (size() >= 10){
+                        remove(0); // el primero.
+                    }
                     return true;
                 }
             };
