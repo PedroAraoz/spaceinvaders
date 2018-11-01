@@ -52,7 +52,9 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
             x = BOARD_WIDTH - 2 * getWidth();
         }
     }
-
+    public boolean isAlive(){
+        return life > 0;
+    }
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
@@ -183,11 +185,6 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
     public boolean isImmune() {
         return Immune;
     }
-    
-    public String getName() {return "" + Math.random();}
-    
-    
-    
     
     @Override
     public void collided(Movable m) {

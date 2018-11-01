@@ -65,7 +65,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         player = new Player();
         shot = new Shot();
-        addKeyListener(new Keyboard(this, player, shot));
+        addKeyListener(new Keyboard(this));
 
         directionUFO = direction;
         ufo = new UFO(directionUFO);
@@ -435,5 +435,9 @@ public class Board extends JPanel implements Runnable, Commons {
         Score s = new Score(JOptionPane.showInputDialog("Insert your name"),player.getPoints());
         leaderBoard.add(s);
         Score.save(leaderBoard);
+    }
+  
+    public Player getPlayer() {
+        return player;
     }
 }
