@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class Board extends JPanel implements Runnable, Commons {
     private Dimension d;
@@ -433,7 +432,7 @@ public class Board extends JPanel implements Runnable, Commons {
         this.message = message;
         ingame = false;
         List<Score> leaderBoard = Score.load();
-        Score s = new Score(player.getName(),player.getPoints());
+        Score s = new Score(JOptionPane.showInputDialog("Insert your name"),player.getPoints());
         leaderBoard.add(s);
         Score.save(leaderBoard);
     }
