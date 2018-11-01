@@ -22,7 +22,7 @@ public class Alien extends Invader {
         bomb = new Bomb(x, y);
         ImageIcon ii = new ImageIcon(Img);
         setImage(ii.getImage());
-        setHeight(16);
+        setHeight(ii.getImage().getHeight(null));
         setWidth(ii.getImage().getWidth(null));
     }
 

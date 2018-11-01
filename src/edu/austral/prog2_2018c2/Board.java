@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public class Board extends JPanel implements Runnable, Commons {
     private Dimension d;
@@ -24,12 +26,13 @@ public class Board extends JPanel implements Runnable, Commons {
     private int level = 1;
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
-    private String message;
+    private String message = "Game Over";
     private long timerUFO;
     private int random;
     private Thread animator;
 
     private List<Shield> shields;
+    private Grapher grapher = new Grapher();
 
     public Board() {
 
@@ -50,7 +53,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
 
     public void gameInit() {
-        
+
         aliens = new ArrayList<>();
         // creating the aliens
         spawnAliens();
@@ -89,7 +92,7 @@ public class Board extends JPanel implements Runnable, Commons {
         }
     }
 
-    public void drawAliens(Grapher grapher) {
+    public void drawAliens(Graphics g) {
 
         Iterator iterator = aliens.iterator(); //Esto para que lo hace??
 
@@ -97,25 +100,25 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (alien.isVisible()) {
 
-                grapher.drawImage(alien.getImage(), alien.getX(), alien.getY());
+                grapher.drawImage(g, alien.getImage(), alien.getX(), alien.getY());
             }
 
         }
     }
 
-    public void drawPlayer(Grapher grapher) {
-        grapher.drawImage(player.getImage(), player.getX(), player.getY());
+    public void drawPlayer(Graphics g) {
+        grapher.drawImage(g, player.getImage(), player.getX(), player.getY());
     }
 
-    public void drawShot(Grapher grapher) {
+    public void drawShot(Graphics g) {
 
         if (shot.isVisible()) {
 
-            grapher.drawImage(shot.getImage(), shot.getX(), shot.getY());
+            grapher.drawImage(g, shot.getImage(), shot.getX(), shot.getY());
         }
     }
 
-    public void drawBombing(Grapher grapher) {
+    public void drawBombing(Graphics g) {
 
         for (Alien a : aliens) {
 
@@ -123,43 +126,41 @@ public class Board extends JPanel implements Runnable, Commons {
 
             if (b.isVisible()) {
 
-                grapher.drawImage(b.getImage(), b.getX(), b.getY());
+                grapher.drawImage(g, b.getImage(), b.getX(), b.getY());
             }
         }
     }
 
-    public void drawUFO(Grapher grapher) {
+    public void drawUFO(Graphics g) {
         if (ufo.isVisible()) {
 
-            grapher.drawImage(ufo.getImage(), ufo.getX(), ufo.getY());
+            grapher.drawImage(g, ufo.getImage(), ufo.getX(), ufo.getY());
         }
     }
 
-    public void drawShield(Grapher grapher) {
+    public void drawShield(Graphics g) {
         for(int i = 0; i<4; i++) {
             if (shields.get(i).isVisible()) {
-                grapher.drawImage(shields.get(i).getImage(), shields.get(i).getX(), shields.get(i).getY());
+                grapher.drawImage(g, shields.get(i).getImage(), shields.get(i).getX(), shields.get(i).getY());
             }
         }
     }
     @Override
     public void paintComponent(Graphics g) {
-        Grapher grapher = new Grapher(g);
-    
         super.paintComponent(g);
-        grapher.drawBackground(d);
+        grapher.drawBackground(g, d);
 
         if (ingame) {
-            grapher.drawLives(player.getLife());
-            grapher.drawPoints(player.getPoints());
-            grapher.drawFloor();
-            grapher.drawLevel(level);
-            drawAliens(grapher);
-            drawPlayer(grapher);
-            drawShot(grapher);
-            drawBombing(grapher);
-            drawUFO(grapher);
-            drawShield(grapher);
+            grapher.drawLives(g, player.getLife());
+            grapher.drawPoints(g, player.getPoints());
+            grapher.drawFloor(g);
+            grapher.drawLevel(g, level);
+            drawAliens(g);
+            drawPlayer(g);
+            drawShot(g);
+            drawBombing(g);
+            drawUFO(g);
+            drawShield(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -167,13 +168,14 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     public void animationCycle() {
-        
+
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
                                                     // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
             if (level < 5) {
                 levelUp();
             } else {
-                gameOver("Game won!");
+                ingame = false;
+                message = "Game won!";
             }
         }
 
@@ -206,7 +208,6 @@ public class Board extends JPanel implements Runnable, Commons {
                     shield.hit();
                     shot.die();
                 }
-
             }
             int y = shot.getY();
             int increment = 4;
@@ -220,6 +221,16 @@ public class Board extends JPanel implements Runnable, Commons {
                 shot.die();
             } else {
                 shot.setY(y);
+            }
+        }
+
+        for (Shield shield: shields) {
+            for (Alien alien : aliens) {
+                if (collides(alien, shield)) {
+                    alien.die();
+                    shield.die();
+                    deaths++;
+                }
             }
         }
 
@@ -266,7 +277,8 @@ public class Board extends JPanel implements Runnable, Commons {
                 int y = alien.getY();
 
                 if (y > GROUND - alien.getHeight()) {
-                    gameOver("Invasion");
+                    ingame = false;
+                    message = "Invasion!";
                 }
                 if(!player.isAliensFrozen()) {
                     alien.act(direction);
@@ -298,18 +310,16 @@ public class Board extends JPanel implements Runnable, Commons {
             if (collides(player,b)) {
                     if(player.getLife()==0) {
                         player.die();
+                        ingame = false;
                         b.setVisible(false);
-                        gameOver("You Died");
                     }
                     else{
                         player.hit();
-                        if (!player.isImmune()) {
-                            for (Shield shield: shields) {
-                                if (shield.isVisible()){
-                                    player.setX(shield.getX() + (shield.getWidth() - player.getWidth())/2);
-                                    break;
-                                }
-                            }
+                        for (Shield shield: shields) {
+                          if (shield.isVisible()){
+                            player.setX(shield.getX() + (shield.getWidth() - player.getWidth())/2);
+                            break;
+                          }
                         }
                         b.setVisible(false);
                     }
@@ -374,8 +384,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
             beforeTime = System.currentTimeMillis();
         }
-        //~~~ medio cabeza
-        new Grapher(this.getGraphics()).endGame(message);
+        grapher.endGame(this.getGraphics(), message);
     }
 
     public void setShot(Shot shot){
@@ -427,13 +436,5 @@ public class Board extends JPanel implements Runnable, Commons {
             e.printStackTrace();
         }
         spawnAliens();
-    }
-    public void gameOver(String message){
-        this.message = message;
-        ingame = false;
-        List<Score> leaderBoard = Score.load();
-        Score s = new Score(JOptionPane.showInputDialog("Insert your name"),player.getPoints());
-        leaderBoard.add(s);
-        Score.save(leaderBoard);
     }
 }
