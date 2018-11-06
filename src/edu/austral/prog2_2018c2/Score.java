@@ -64,7 +64,6 @@ public class Score implements Comparable<Score> {
 
     public static List<Score> load(){
         try {
-
             FileReader fr = new FileReader(FileName);
             BufferedReader br = new BufferedReader(fr);
             List<Score> LeaderBoard = new ArrayList<Score>() { //Aca armo una lista que se mantiene a si misma ordenada por puntaje del Score
