@@ -141,12 +141,16 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
         System.out.println("Immunity Power");
         Timer timer = new Timer();
         Immune = true;
-        playerImg = ImmunityImg;//Hay que hacer que el board actualize la imagen del player
+        playerImg = ImmunityImg;
+        ImageIcon ii = new ImageIcon(playerImg);
+        setImage(ii.getImage());
         int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
                 Immune = false;
                 playerImg = ShipImg;
+                ImageIcon ii = new ImageIcon(playerImg);
+                setImage(ii.getImage());
                 powerIsOn = false;
             }
         }, time*1000); //3-5 segundos
