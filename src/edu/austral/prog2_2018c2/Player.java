@@ -21,7 +21,7 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
 
     private String playerImg;
     private final String ShipImg = "src/images/player.png";
-    private final String ImmunityImg = "src/images/shield.gif";
+    private final String ImmunityImg = "src/images/shield.gif";//Falta editar esta imagen para q este el player adentro
 
     public Player() {
 
@@ -112,10 +112,10 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
 
         int randomNumber = (int) (Math.random()*101); //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
 
-        if(randomNumber < 10){
+        if(randomNumber < 1){
             freezePower();
         }
-        else if(randomNumber < 30){
+        else if(randomNumber < 3000000){
             immunityPower();
         }
         else{
@@ -144,6 +144,8 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
         playerImg = ImmunityImg;
         ImageIcon ii = new ImageIcon(playerImg);
         setImage(ii.getImage());
+        int currentY = getY();
+        setY(y-(new ImageIcon(ShipImg).getIconHeight() + getHeight()));//El escudo tiene distinta altura q la img original
         int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
@@ -151,6 +153,7 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
                 playerImg = ShipImg;
                 ImageIcon ii = new ImageIcon(playerImg);
                 setImage(ii.getImage());
+                setY(currentY);
                 powerIsOn = false;
             }
         }, time*1000); //3-5 segundos
