@@ -33,9 +33,6 @@ public class Keyboard extends KeyAdapter {
 
         if (key == KeyEvent.VK_SPACE) {
 
-            /*if(player.isDoubleDamage() && !shot.isVisible()){
-                board.setShot(new Shot(x, y));
-            }*/
             //removed if(ingame) before this line.
             if (!shot.isVisible()) {
                 board.setShot(new Shot(x, y));

@@ -112,10 +112,10 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
 
         int randomNumber = (int) (Math.random()*101); //genera un numero aleatorio entre 0 y 100. El Math.random() solo genera numeros entre 0 y 1
 
-        if(randomNumber < 1){
+        if(randomNumber < 10){
             freezePower();
         }
-        else if(randomNumber < 3000000){
+        else if(randomNumber < 30){
             immunityPower();
         }
         else{

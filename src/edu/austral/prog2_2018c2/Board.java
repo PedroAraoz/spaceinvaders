@@ -220,46 +220,6 @@ public class Board extends JPanel implements Runnable, Commons {
             } else {
                 shot.setY(y);
             }
-            /*
-            //Double shot
-            if(player.isDoubleDamage()){
-                if (secondShot.isVisible()) {
-
-                    for (Alien alien: aliens) {
-
-                        if (collides(alien, secondShot)) {
-
-                            //T0do lo que viene ahora deberia estar delegado
-
-                            ImageIcon ii = new ImageIcon(explImg);
-                            //no grafica nunca a la imagen de explosion
-                            alien.setImage(ii.getImage());
-                            player.addPoints(alien.getPoints());
-                            alien.die();
-                            //agrego el sistema de poderes especiales
-                            player.consecutiveHitPlus1();
-                            deaths++;
-                            secondShot.die();
-
-                        }
-                    }
-                    for (Shield shield: shields) {
-                        if (collides(shield, secondShot)) {
-                            shield.hit();
-                            secondShot.die();
-                        }
-
-                    }
-
-            int y2 = secondShot.getY();
-
-            y -= increment;
-
-            if (y2 < 0) {
-                secondShot.die();
-            } else {
-                secondShot.setY(y);
-            }*/
         }
 
 
