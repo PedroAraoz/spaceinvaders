@@ -91,8 +91,6 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void drawAliens(Grapher grapher) {
 
-        Iterator iterator = aliens.iterator(); //Esto para que lo hace??
-
         for (Alien alien: aliens) {
 
             if (alien.isVisible()) {
@@ -361,8 +359,8 @@ public class Board extends JPanel implements Runnable, Commons {
     }
 
     public void killeverything(){
-        for (int i = 0; i < aliens.size(); i++) {
-            aliens.get(i).die();
+        for (Alien alien : aliens) {
+            alien.die();
         }
         aliensKilled = NUMBER_OF_ALIENS_TO_DESTROY;
     }
