@@ -18,10 +18,18 @@ public class SpaceInvaders extends JFrame implements Commons {
     }
 
     public static void main(String[] args) {
+        /*if (args.length == 1 && args[0].equals("normal")){
+            EventQueue.invokeLater(() -> {
+                SpaceInvaders ex = new SpaceInvaders();
+                ex.setVisible(true);
+            });
+        } else if (args.length == 1 && args[0].equals("two")){*/
+            EventQueue.invokeLater(() -> {
+                SpaceInvaders ex = new SpaceInvaders();
+                ex.setVisible(true);
+            });
+        //}
 
-        EventQueue.invokeLater(() -> {
-            SpaceInvaders ex = new SpaceInvaders();
-            ex.setVisible(true);
-        });
+        
     }
 }

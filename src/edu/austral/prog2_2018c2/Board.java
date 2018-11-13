@@ -27,14 +27,11 @@ public class Board extends JPanel implements Runnable, Commons {
     private long timerUFO;
     private int random;
     private Thread animator;
-
     private List<Shield> shields;
 
     public Board() {
-
         initBoard();
     }
-
     private void initBoard() {
 
         setFocusable(true);
@@ -66,7 +63,6 @@ public class Board extends JPanel implements Runnable, Commons {
         shot = new Shot();
         secondShot = new Shot();
         addKeyListener(new Keyboard(this));
-
         ufo = new UFO(direction);
         ufo.setVisible(false);
 
