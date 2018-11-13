@@ -115,7 +115,7 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
         if(randomNumber < 1){
             freezePower();
         }
-        else if(randomNumber < 3000000){
+        else if(randomNumber < 300000){
             immunityPower();
         }
         else{
@@ -167,7 +167,9 @@ public class Player extends Sprite implements GameObject, Movable, Commons {
         int time = 3 + (int)(Math.random() * ((5 - 3) + 1));
         timer.schedule(new TimerTask() {
             public void run() {
+                doubleDamage = false;
                 powerIsOn = false;
+                System.out.println(12);
             }
         }, time*1000); //3-5 segundos
     }

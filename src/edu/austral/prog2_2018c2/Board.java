@@ -15,7 +15,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private ArrayList<Alien> aliens;
     private Player player;
     private Shot shot;
-    //private Shot secondShot;
+    private Shot secondShot;
     private UFO ufo;
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
@@ -66,6 +66,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
         player = new Player();
         shot = new Shot();
+        secondShot = new Shot();
         addKeyListener(new Keyboard(this));
 
         directionUFO = direction;
@@ -114,6 +115,11 @@ public class Board extends JPanel implements Runnable, Commons {
 
             grapher.drawImage(shot.getImage(), shot.getX(), shot.getY());
         }
+        if (secondShot.isVisible()) {
+
+            grapher.drawImage(secondShot.getImage(), secondShot.getX(), secondShot.getY());
+        }
+
     }
 
     public void drawBombing(Grapher grapher) {
@@ -182,98 +188,75 @@ public class Board extends JPanel implements Runnable, Commons {
         player.act();
 
         // shot
-        if (shot.isVisible()) {
-
-            for (Alien alien : aliens) {
-
-                if (collides(alien, shot)) {
-
-                    //T0do lo que viene ahora deberia estar delegado
-
-                    ImageIcon ii = new ImageIcon(explImg);
-                    //no grafica nunca a la imagen de explosion
-                    alien.setImage(ii.getImage());
-                    player.addPoints(alien.getPoints());
-                    alien.die();
-                    //agrego el sistema de poderes especiales
-                    player.consecutiveHitPlus1();
-                    deaths++;
-                    shot.die();
-
-                }
-            }
-            for (Shield shield : shields) {
-                if (collides(shield, shot)) {
-                    shield.hit();
-                    shot.die();
-                }
-
-            }
-            int y = shot.getY();
-            int increment = 4;
-
-            y -= increment;
-
-            if (y < 0) {
-                player.missedShot();
-                shot.die();
-            } else {
-                shot.setY(y);
-            }
-            /*
-            //Double shot
-            if(player.isDoubleDamage()){
-                if (secondShot.isVisible()) {
-
-                    for (Alien alien: aliens) {
-
-                        if (collides(alien, secondShot)) {
-
-                            //T0do lo que viene ahora deberia estar delegado
-
-                            ImageIcon ii = new ImageIcon(explImg);
-                            //no grafica nunca a la imagen de explosion
-                            alien.setImage(ii.getImage());
-                            player.addPoints(alien.getPoints());
-                            alien.die();
-                            //agrego el sistema de poderes especiales
-                            player.consecutiveHitPlus1();
-                            deaths++;
-                            secondShot.die();
-
-                        }
-                    }
-                    for (Shield shield: shields) {
-                        if (collides(shield, secondShot)) {
-                            shield.hit();
-                            secondShot.die();
-                        }
-
-                    }
-
-            int y2 = secondShot.getY();
-
-            y -= increment;
-
-            if (y2 < 0) {
-                secondShot.die();
-            } else {
-                secondShot.setY(y);
-            }*/
+        shotLogic(shot);
+        if(player.isDoubleDamage()){
+            shotLogic(secondShot);
         }
 
-
-        for (Shield shield : shields) {
-            for (Alien alien : aliens) {
-                if (collides(alien, shield)) {
-                    alien.die();
-                    shield.die();
-                    deaths++;
-                }
-            }
-        }
+        //Shields
+        ShieldLogic();
 
         // aliens
+        AlienLogic();
+
+        // bombs
+        BombLogic();
+        // UFO
+        UFOlogic();
+    }
+
+    private void BombLogic() {
+        Random generator = new Random();
+
+        for (Alien alien : aliens) {
+
+            int shot = generator.nextInt(15);
+            Bomb b = alien.getBomb();
+
+            if (shot == CHANCE && alien.isVisible() && !b.isVisible()) {
+                b.setVisible(true);
+                b.setX(alien.getX());
+                b.setY(alien.getY());
+            }
+
+            for (int i = 0; i < 4; i++) {
+                if (collides(shields.get(i), b)) {
+                    shields.get(i).hit();
+                    b.setVisible(false);
+                }
+            }
+            //player gets hit
+            if (collides(player, b)) {
+                if (player.getLife() == 0) {
+                    player.die();
+                    b.setVisible(false);
+                    gameOver("You Died");
+                } else {
+                    player.hit();
+                    if (!player.isImmune()) {
+                        for (Shield shield : shields) {
+                            if (shield.isVisible()) {
+                                player.setX(shield.getX() + (shield.getWidth() - player.getWidth()) / 2);
+                                break;
+                            }
+                        }
+                    }
+                    b.setVisible(false);
+                }
+            }
+
+            if (b.isVisible()) {
+
+                b.setY(b.getY() + Math.abs(direction));
+
+                if (b.getY() >= GROUND - b.getHeight()) {
+                    b.setVisible(false);
+                }
+            }
+        }
+    }
+
+    private void AlienLogic() {
 
         for (Alien alien : aliens) {
 
@@ -323,76 +306,6 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
             }
         }
-
-        // bombs
-        Random generator = new Random();
-
-        for (Alien alien : aliens) {
-
-            int shot = generator.nextInt(15);
-            Bomb b = alien.getBomb();
-
-            if (shot == CHANCE && alien.isVisible() && !b.isVisible()) {
-                b.setVisible(true);
-                b.setX(alien.getX());
-                b.setY(alien.getY());
-            }
-
-            for (int i = 0; i < 4; i++) {
-                if (collides(shields.get(i), b)) {
-                    shields.get(i).hit();
-                    b.setVisible(false);
-                }
-            }
-            //player gets hit
-            if (collides(player, b)) {
-                if (player.getLife() == 0) {
-                    player.die();
-                    b.setVisible(false);
-                    gameOver("You Died");
-                } else {
-                    player.hit();
-                    if (!player.isImmune()) {
-                        for (Shield shield : shields) {
-                            if (shield.isVisible()) {
-                                player.setX(shield.getX() + (shield.getWidth() - player.getWidth()) / 2);
-                                break;
-                            }
-                        }
-                    }
-                    b.setVisible(false);
-                }
-            }
-
-            if (b.isVisible()) {
-
-                b.setY(b.getY() + Math.abs(direction));
-
-                if (b.getY() >= GROUND - b.getHeight()) {
-                    b.setVisible(false);
-                }
-            }
-        }
-        // UFO
-        long newTime = System.currentTimeMillis();
-        if (newTime - timerUFO >= 1000 * random) {
-            directionUFO = direction;
-            ufo = new UFO(directionUFO);
-            timerUFO = newTime;
-            random = 45 + (int) (Math.random() * ((60 - 45) + 1));
-        }
-
-        if (collides(ufo, shot)) {
-            ufo.die();
-            player.addPoints(ufo.getPoints());
-        }
-        if (directionUFO > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {//walls como objects y que haga collides con wall
-            ufo.die();
-        }
-        if (directionUFO < 0 && ufo.getX() <= 0) {
-            ufo.die();
-        }
-        ufo.act(directionUFO);
     }
 
     @Override
@@ -430,6 +343,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public void setShot(Shot shot){
         this.shot = shot;
     }
+    public void setSecondShot(Shot shot){this.secondShot = shot;}
 
     public Shot getShot(){
         return shot;
@@ -489,4 +403,78 @@ public class Board extends JPanel implements Runnable, Commons {
     public Player getPlayer() {
         return player;
     }
+
+    public Shot getSecondShot() {
+        return secondShot;
+    }
+
+    private void ShieldLogic(){
+        for (Shield shield : shields) {
+            for (Alien alien : aliens) {
+                if (collides(alien, shield)) {
+                    alien.die();
+                    shield.die();
+                    deaths++;
+                }
+            }
+        }
+    }
+
+    private void UFOlogic(){
+        long newTime = System.currentTimeMillis();
+        if (newTime - timerUFO >= 1000 * random) {
+            directionUFO = direction;
+            ufo = new UFO(directionUFO);
+            timerUFO = newTime;
+            random = 45 + (int) (Math.random() * ((60 - 45) + 1));
+        }
+
+        if (collides(ufo, shot)) {
+            ufo.die();
+            player.addPoints(ufo.getPoints());
+        }
+        if (directionUFO > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {//walls como objects y que haga collides con wall
+            ufo.die();
+        }
+        if (directionUFO < 0 && ufo.getX() <= 0) {
+            ufo.die();
+        }
+        ufo.act(directionUFO);
+    }
+
+    public void shotLogic(Shot shot) {
+        if (shot.isVisible()) {
+            for (Alien alien : aliens) {
+                if (collides(alien, shot)) {
+
+                    player.addPoints(alien.getPoints());
+                    alien.die();
+                    //agrego el sistema de poderes especiales
+                    player.consecutiveHitPlus1();
+                    deaths++;
+                    shot.die();
+
+                }
+            }
+            for (Shield shield : shields) {
+                if (collides(shield, shot)) {
+                    shield.hit();
+                    shot.die();
+                }
+
+            }
+            int y = shot.getY();
+            int increment = 4;
+
+            y -= increment;
+
+            if (y < 0) {
+                player.missedShot();
+                shot.die();
+            } else {
+                shot.setY(y);
+            }
+        }
+    }
+
 }

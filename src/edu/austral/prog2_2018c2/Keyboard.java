@@ -7,11 +7,13 @@ public class Keyboard extends KeyAdapter {
     //Estos son los objetos a los que necesita mandarles los mensajes cuando se presionan las teclas
     private Player player;
     private Shot shot;
+    private Shot secondShot;
     private Board board;
 
     public Keyboard(Board board){
         this.player = board.getPlayer();
         this.shot = board.getShot();
+        this.secondShot = board.getSecondShot();
         this.board = board;
     }
 
@@ -32,13 +34,17 @@ public class Keyboard extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-
-            /*if(player.isDoubleDamage() && !shot.isVisible()){
+            // esto es para los dos tiros
+            if(player.isDoubleDamage() && !shot.isVisible()){
+                board.setSecondShot(new Shot(x-5, y));
+                board.setShot(new Shot(x + 5, y));
+            }
+            // para un tiro
+            if (!player.isDoubleDamage() && !shot.isVisible() && !player.isImmune()) {
                 board.setShot(new Shot(x, y));
-            }*/
-            //removed if(ingame) before this line.
-            if (!shot.isVisible()) {
-                board.setShot(new Shot(x, y));
+            }
+            if (!player.isDoubleDamage() && !shot.isVisible() && player.isImmune()) {
+                board.setShot(new Shot(x+17, y));
             }
         }
         if (key == KeyEvent.VK_R){

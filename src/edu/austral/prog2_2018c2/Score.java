@@ -9,7 +9,7 @@ public class Score implements Comparable<Score> {
     private String name;
     private int score;
     private static String serializeSplitParameter = ":";
-    private static String FileName = "C:/Users/Pedro/Desktop/TXT.txt";
+    private static String FileName = "C:/Users/Tomi/Desktop/TXT.txt";
 
     public Score(String name, int score){
         this.name = name;
