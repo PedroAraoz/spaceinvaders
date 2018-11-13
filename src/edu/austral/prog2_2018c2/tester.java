@@ -42,7 +42,7 @@ public class tester {
     System.out.println("a");
   }
   @Test
-  public void aaa(){
+  public void InteractionTest(){
     Player p = new Player();
     Alien a = new Alien(0,0, "small");
     Bomb b = new Bomb(0,0);
