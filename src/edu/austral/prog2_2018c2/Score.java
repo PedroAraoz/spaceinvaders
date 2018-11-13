@@ -17,7 +17,7 @@ public class Score implements Comparable<Score> {
         this.name = name;
         this.score = score;
         Calendar cal = Calendar.getInstance();
-        date = ""+cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.YEAR);
+        date = ""+cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR);
     }
 
     public Score(String name, int score, String date){
