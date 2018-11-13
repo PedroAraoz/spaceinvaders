@@ -2,7 +2,7 @@ package edu.austral.prog2_2018c2;
 
 import javax.swing.ImageIcon;
 
-public class Shot extends Sprite implements GameObject, Movable{
+public class Shot extends Sprite{
 
     private final String shotImg = "src/images/shot.png";
     private final int H_SPACE = 6;
@@ -23,17 +23,5 @@ public class Shot extends Sprite implements GameObject, Movable{
 
         setX(x + H_SPACE);
         setY(y - V_SPACE);
-    }
-    @Override
-    public void collided(Movable m) {
-        m.collideWithShot(this);
-    }
-    
-    @Override
-    public void collideWithAlien(Alien alien) {
-        alien.collideWithShot(this);
-    }
-    public void collideWithShield(Shield shield) {
-        System.out.println("SHOT WIT SHIELD");
     }
 }

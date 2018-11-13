@@ -11,7 +11,7 @@ public class Score implements Comparable<Score> {
     private int score;
     private String date;
     private static String serializeSplitParameter = ":";
-    private static String FileName = "C:\\Users\\alejo\\Documents\\Prog 2\\SpaceInvaders\\src\\edu\\austral\\prog2_2018c2\\LeaderBoard.txt";
+    private static String FileName = "C:/Users/Pedro/Desktop/TXT.txt";
 
     public Score(String name, int score){
         this.name = name;
@@ -95,7 +95,6 @@ public class Score implements Comparable<Score> {
 
             while ((line = br.readLine()) != null){
                 LeaderBoard.add(Score.deserialize(line));
-                System.out.println("aaaaaaaa");
             }
             br.close();
 
