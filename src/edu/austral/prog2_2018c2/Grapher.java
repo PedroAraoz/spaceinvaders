@@ -73,7 +73,7 @@ public class Grapher extends JPanel implements Commons {
         g.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         FontMetrics font = g.getFontMetrics();
         for (int i = scoreboard.size()-1; i > 0; i--) {
-            text = scoreboard.get(i).getName() + " : " + scoreboard.get(i).getScore();
+            text = scoreboard.get(i).getName() + " : " + scoreboard.get(i).getScore() + " : " + scoreboard.get(i).getDate();
             int x = font.stringWidth(text);
             drawText(text, (BOARD_WIDTH - x)/2, 60+Math.abs(i-scoreboard.size())*20, Color.white);
         }
