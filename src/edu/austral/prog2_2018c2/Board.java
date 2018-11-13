@@ -23,7 +23,6 @@ public class Board extends JPanel implements Runnable, Commons {
     private int aliensKilled = 0;
     private int level = 1;
     private boolean ingame = true;
-    private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
     private String message;
     private long timerUFO;
     private int random;
@@ -255,31 +254,13 @@ public class Board extends JPanel implements Runnable, Commons {
     private void AlienLogic() {
 
         for (Alien alien : aliens) {
-
             int x = alien.getX();
-
-            if (x >= BOARD_WIDTH - BORDER_RIGHT && direction > 0) {
-
+            Iterator i1 = aliens.iterator();
+            if ((x >= BOARD_WIDTH - BORDER_RIGHT && direction > 0)|| (x < BORDER_LEFT && direction < 0)){
                 direction = -direction;
-                Iterator i1 = aliens.iterator();
-
                 while (i1.hasNext()) {
-
                     Alien a2 = (Alien) i1.next();
                     a2.setY(a2.getY() + GO_DOWN);
-                }
-            }
-
-            if (x <= BORDER_LEFT && direction < 0) {
-
-                direction = -direction;
-
-                Iterator i2 = aliens.iterator();
-
-                while (i2.hasNext()) {
-
-                    Alien a = (Alien) i2.next();
-                    a.setY(a.getY() + GO_DOWN);
                 }
             }
         }
@@ -339,7 +320,7 @@ public class Board extends JPanel implements Runnable, Commons {
     public void setShot(Shot shot){
         this.shot = shot;
     }
-    public void setSecondShot(Shot shot){this.secondShot = shot;}
+    public void setSecondShot(Shot shot){ this.secondShot = shot; }
 
     public Shot getShot(){
         return shot;

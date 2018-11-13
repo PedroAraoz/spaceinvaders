@@ -5,8 +5,8 @@ public class Invader extends Sprite {
   protected int points;
   
   public void act(int direction) {
-    
     this.x += direction;
+    
   }
   public int getPoints(){
     return points;
