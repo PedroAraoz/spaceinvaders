@@ -20,8 +20,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private final int ALIEN_INIT_X = 150;
     private final int ALIEN_INIT_Y = 5;
     private int direction = -1;
-    private int directionUFO;
-    private int deaths = 0;
+    private int aliensKilled = 0;
     private int level = 1;
     private boolean ingame = true;
     private final String explImg = "src/images/explosion.png"; //Esto podria ir adentro de alien y que tenga un metodo para cambiar su sprite, no?
@@ -69,8 +68,7 @@ public class Board extends JPanel implements Runnable, Commons {
         secondShot = new Shot();
         addKeyListener(new Keyboard(this));
 
-        directionUFO = direction;
-        ufo = new UFO(directionUFO);
+        ufo = new UFO(direction);
         ufo.setVisible(false);
 
 
@@ -175,7 +173,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void animationCycle() {
 
-        if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
+        if (aliensKilled == NUMBER_OF_ALIENS_TO_DESTROY) { //Se puede reemplazar el num de aliens de commons con un metodo que se fije cuantos hay
             // O podriamos ir eliminando los aliens de la lista y que esto se fije si hay aliens en la lista
             if (level < 5) {
                 levelUp();
@@ -366,7 +364,7 @@ public class Board extends JPanel implements Runnable, Commons {
         for (int i = 0; i < aliens.size(); i++) {
             aliens.get(i).die();
         }
-        deaths = NUMBER_OF_ALIENS_TO_DESTROY;
+        aliensKilled = NUMBER_OF_ALIENS_TO_DESTROY;
     }
 
     public void levelUp(){
@@ -377,7 +375,7 @@ public class Board extends JPanel implements Runnable, Commons {
             direction--;
         }
         level++;
-        deaths = 0;
+        aliensKilled = 0;
         for(int i=0; i<4; i++) {
             if(shields.get(i).isVisible()) {
                 shields.get(i).die();
@@ -414,7 +412,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 if (collides(alien, shield)) {
                     alien.die();
                     shield.die();
-                    deaths++;
+                    aliensKilled++;
                 }
             }
         }
@@ -423,8 +421,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private void UFOlogic(){
         long newTime = System.currentTimeMillis();
         if (newTime - timerUFO >= 1000 * random) {
-            directionUFO = direction;
-            ufo = new UFO(directionUFO);
+            ufo = new UFO(direction);
             timerUFO = newTime;
             random = 45 + (int) (Math.random() * ((60 - 45) + 1));
         }
@@ -433,13 +430,13 @@ public class Board extends JPanel implements Runnable, Commons {
             ufo.die();
             player.addPoints(ufo.getPoints());
         }
-        if (directionUFO > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {//walls como objects y que haga collides con wall
+        if (direction > 0 && ufo.getX() >= BOARD_WIDTH - ufo.getWidth()) {//walls como objects y que haga collides con wall
             ufo.die();
         }
-        if (directionUFO < 0 && ufo.getX() <= 0) {
+        if (direction < 0 && ufo.getX() <= 0) {
             ufo.die();
         }
-        ufo.act(directionUFO);
+        ufo.act(ufo.getDirection());
     }
 
     public void shotLogic(Shot shot) {
@@ -451,7 +448,7 @@ public class Board extends JPanel implements Runnable, Commons {
                     alien.die();
                     //agrego el sistema de poderes especiales
                     player.consecutiveHitPlus1();
-                    deaths++;
+                    aliensKilled++;
                     shot.die();
 
                 }
@@ -476,5 +473,4 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
     }
-
 }
