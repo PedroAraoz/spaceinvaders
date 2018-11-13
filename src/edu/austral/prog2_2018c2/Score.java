@@ -2,22 +2,32 @@ package edu.austral.prog2_2018c2;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Score implements Comparable<Score> {
 
     private String name;
     private int score;
+    private String date;
     private static String serializeSplitParameter = ":";
-    private static String FileName = "C:/Users/Tomi/Desktop/TXT.txt";
+    private static String FileName = "C:\\Users\\alejo\\Documents\\Prog 2\\SpaceInvaders\\src\\edu\\austral\\prog2_2018c2\\LeaderBoard.txt";
 
     public Score(String name, int score){
         this.name = name;
         this.score = score;
+        Calendar cal = Calendar.getInstance();
+        date = ""+cal.get(Calendar.DAY_OF_MONTH)+"/"+cal.get(Calendar.MONTH)+1+"/"+cal.get(Calendar.YEAR);
+    }
+
+    public Score(String name, int score, String date){
+        this.name = name;
+        this.score = score;
+        this.date = date;
     }
 
     public String serialize(){
-        return name+serializeSplitParameter+score;
+        return name+serializeSplitParameter+score+serializeSplitParameter+date;
     }
 
     @Override
@@ -39,11 +49,15 @@ public class Score implements Comparable<Score> {
         return name;
     }
 
-     //Static methods
+    public String getDate() {
+        return date;
+    }
+
+    //Static methods
     
     public static Score deserialize(String string){
         String[] splittedString = string.split(serializeSplitParameter);
-        return new Score(splittedString[0], Integer.parseInt(splittedString[1]));
+        return new Score(splittedString[0], Integer.parseInt(splittedString[1]), splittedString[2]);
     }
 
     public static void save(List<Score> LeaderBoard){
