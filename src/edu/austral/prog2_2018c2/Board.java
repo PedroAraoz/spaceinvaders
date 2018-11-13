@@ -188,6 +188,9 @@ public class Board extends JPanel implements Runnable, Commons {
         if(player.isDoubleDamage()){
             shotLogic(secondShot);
         }
+        if(!player.isDoubleDamage()){
+            secondShot.setVisible(false);
+        }
 
         //Shields
         ShieldLogic();
