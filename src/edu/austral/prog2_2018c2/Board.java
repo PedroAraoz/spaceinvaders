@@ -396,6 +396,12 @@ public class Board extends JPanel implements Runnable, Commons {
         Score s = new Score(JOptionPane.showInputDialog("Insert your name"),player.getPoints());
         leaderBoard.add(s);
         Score.save(leaderBoard);
+        new Grapher(this.getGraphics()).drawScoreboard(leaderBoard);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public Player getPlayer() {

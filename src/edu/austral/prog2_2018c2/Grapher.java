@@ -2,7 +2,7 @@ package edu.austral.prog2_2018c2;
 
 import java.awt.*;
 import javax.swing.*;
-
+import java.util.List;
 
 public class Grapher extends JPanel implements Commons {
     
@@ -67,5 +67,15 @@ public class Grapher extends JPanel implements Commons {
         int x =font.stringWidth(text);
         g.setColor(Color.white);
         g.drawString(text, BOARD_WIDTH-BORDER_RIGHT-x, ratio);
+    }
+    public void drawScoreboard(List<Score> scoreboard){
+        String text;
+        g.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        FontMetrics font = g.getFontMetrics();
+        for (int i = scoreboard.size()-1; i > 0; i--) {
+            text = scoreboard.get(i).getName() + " : " + scoreboard.get(i).getScore();
+            int x = font.stringWidth(text);
+            drawText(text, (BOARD_WIDTH - x)/2, 60+Math.abs(i-scoreboard.size())*20, Color.white);
+        }
     }
 }
