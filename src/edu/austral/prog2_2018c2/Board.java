@@ -286,7 +286,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     @Override
     public void run() {
-
+        requestFocus();
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
@@ -367,6 +367,11 @@ public class Board extends JPanel implements Runnable, Commons {
         }
         spawnAliens();
     }
+    
+    public void drawHighscore(){
+        List<Score> leaderBoard = Score.load();
+        new Grapher(this.getGraphics()).drawScoreboard(leaderBoard);
+    }
     public void gameOver(String message){
         this.message = message;
         ingame = false;
@@ -374,7 +379,7 @@ public class Board extends JPanel implements Runnable, Commons {
         Score s = new Score(JOptionPane.showInputDialog("Insert your name"),player.getPoints());
         leaderBoard.add(s);
         Score.save(leaderBoard);
-        new Grapher(this.getGraphics()).drawScoreboard(leaderBoard);
+        drawHighscore();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

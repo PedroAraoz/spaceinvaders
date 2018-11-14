@@ -68,7 +68,7 @@ public class Grapher extends JPanel implements Commons {
         g.setColor(Color.white);
         g.drawString(text, BOARD_WIDTH-BORDER_RIGHT-x, ratio);
     }
-    public void drawScoreboard(List<Score> scoreboard){
+    public void drawScoreboard(List<Score> scoreboard) {
         String text;
         g.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         FontMetrics font = g.getFontMetrics();
