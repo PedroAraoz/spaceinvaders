@@ -169,7 +169,6 @@ public class Player extends Sprite implements Commons {
             public void run() {
                 doubleDamage = false;
                 powerIsOn = false;
-                System.out.println(12);
             }
         }, time*1000); //3-5 segundos
     }

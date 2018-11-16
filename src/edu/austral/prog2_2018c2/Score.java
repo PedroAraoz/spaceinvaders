@@ -14,7 +14,11 @@ public class Score implements Comparable<Score> {
     private static String FileName = "C:/Users/Pedro/Desktop/TXT.txt";
 
     public Score(String name, int score){
-        this.name = name;
+        if (name.equals("")){
+            this.name = "no one";
+        } else {
+            this.name = name;
+        }
         this.score = score;
         Calendar cal = Calendar.getInstance();
         date = ""+cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR);
@@ -33,10 +37,10 @@ public class Score implements Comparable<Score> {
     @Override
     public int compareTo(Score o) {
         if(score > ((Score) o).getScore()){
-            return 1;
+            return -1;
         }
         else if (score < ((Score) o).getScore()){
-            return -1;
+            return 1;
         }
         else return 0;
     }
@@ -66,7 +70,6 @@ public class Score implements Comparable<Score> {
             for (Score score : LeaderBoard) {
                 String txt = score.serialize() + System.getProperty( "line.separator" );
                 fw.write(txt);
-                System.out.println("beep boop");
             }
             fw.close();
         } catch (FileNotFoundException e) {
@@ -86,7 +89,7 @@ public class Score implements Comparable<Score> {
                     super.add(score);
                     this.sort((Score::compareTo));
                     if (size() >= 10){
-                        remove(0); // el primero.
+                        remove(9); // el ultimo.
                     }
                     return true;
                 }
@@ -100,7 +103,7 @@ public class Score implements Comparable<Score> {
 
             return LeaderBoard;
 
-        } catch (FileNotFoundException e) { //Aca podriamos usar expresiones lambda en vez de devolver null... wip
+        } catch (FileNotFoundException e) {
             System.out.println("read: File not found");
             return null;
         } catch (IOException e) {
