@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class tester {
 
   @Test
@@ -21,9 +23,11 @@ public class tester {
 
   @Test
   public void deserializeDebugger(){
-    Score s = Score.deserialize("b:1");
-    String sName = s.getName(); //Expects b
-    int sScore = s.getScore(); //Expects 1
+    Score s = Score.deserialize("b:1:date");
+    String sName = s.getName();
+    int sScore = s.getScore();
+    assertEquals("b", sName);
+    assertEquals(1, sScore);
   }
   
   @Test

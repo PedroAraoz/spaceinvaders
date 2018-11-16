@@ -17,7 +17,7 @@ public class HelloWorldClient{
         HelloWorld hello = service.getPort(HelloWorld.class);
  
        // System.out.println(hello.getHelloWorldAsString("Messi"));
-        System.out.println(hello.space());
+        System.out.println(hello.readMessage());
         System.out.println();
  
     }

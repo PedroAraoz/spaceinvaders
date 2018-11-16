@@ -9,7 +9,9 @@ import javax.jws.soap.SOAPBinding.Style;
 @SOAPBinding(style = Style.RPC)
 //@SOAPBinding(style = Style.DOCUMENT)
 public interface HelloWorld {
- 
+  String message = "";
+  @WebMethod void writeMessage(String s);
+  @WebMethod String readMessage();
 	@WebMethod String getHelloWorldAsString(String name);
   @WebMethod String space();
 }

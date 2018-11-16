@@ -7,8 +7,10 @@ import java.awt.event.KeyEvent;
 public class HelloWorldPublisher{
  
 	public static void main(String[] args) {
-		String s = "space";
-		Endpoint.publish("http://localhost:7779/ws/hello", new HelloWorldImpl());
+		String s = "hello";
+		HelloWorldImpl a = new HelloWorldImpl();
+		a.writeMessage(s);
+		Endpoint.publish("http://localhost:7779/ws/hello", a);
 	   //Endpoint.publish("http://localhost:7779/ws/hello", new HelloWorldImpl());
     }
  
